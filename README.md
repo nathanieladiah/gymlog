@@ -106,3 +106,16 @@ The app is used to track fitness progress, especially in terms of weights lifted
 <br>
 
 ## Create graphic design
+
+
+
+
+## Build Log
+
+### October 6th 2021
+
+Created the project and logger app. Added templates for login, logout, register, dashboard, and exercise pages.  
+Added logic views for login, logout, and register.
+The exercise page has a button for a modal to add new exercises.
+
+There should be a list of pre programmed-exercises - do this in refinements.

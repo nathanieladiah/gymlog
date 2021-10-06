@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 
-from .models import User
+from .models import User, Exercise
 from django.db import IntegrityError
 # Create your views here.
 
@@ -70,5 +70,13 @@ def register(request):
 def dashboard(request):
 	return render(request, "logger/dashboard.html")
 
+@login_required
 def exercise(request):
-	return render(request, "logger/exercise.html")
+
+	user = request.user
+	# Get the exercises that the user has created.
+	exercises = Exercise.objects.filter(user=user).all()
+
+	return render(request, "logger/exercise.html", {
+		"exercises": exercises
+	})
