@@ -9,6 +9,11 @@ from .models import User, Exercise
 from django.db import IntegrityError
 # Create your views here.
 
+METHODS = (
+	("car", "Cardio"),
+	("wgt", "Strength Training")
+)
+
 def index(request):
 	return render(request, "logger/index.html")
 
@@ -78,5 +83,6 @@ def exercise(request):
 	exercises = Exercise.objects.filter(user=user).all()
 
 	return render(request, "logger/exercise.html", {
-		"exercises": exercises
+		"exercises": exercises,
+		"methods": METHODS
 	})
