@@ -7,5 +7,7 @@ urlpatterns = [
 	path("logout", views.logout_view, name="logout"),
 	path("register", views.register, name="register"),
 	path("dashboard", views.dashboard, name="dashboard"),
-	path("exercise", views.exercise, name="exercise")
+	path("exercises", views.exercises, name="exercises"),
+	path("new_exercise", views.new_exercise, name="new_exercise"),
+	path("exercise/<int:exercise_id>", views.exercise, name="exercise"),
 ]

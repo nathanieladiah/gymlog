@@ -1,50 +1,56 @@
 {% extends 'logger/dblayout.html' %}
 
-{% block title %}Exercises{% endblock %}
+{% block title %}{{ exercise.name }}{% endblock %}
 
 {% block body %}
-	<ul>
-		{% for exercise in exercises %}
-			<li>{{ exercise.name }}</li>
-		{% endfor %}
-	</ul>
-
-	<!-- Button to trigger add exercise modal -->
-	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Addexercise">
-		Add
-	</button>
-
-	<!-- Modal -->
-	<div class="modal fade" id="Addexercise" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="ModalLabel">Add exercise</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+	<div class="container-fluid">
+		<h1 class="text-center mb-2">{{ exercise.name }}</h1>
+		
+		<nav class="nav justify-content-between mb-4">
+			<a class="nav-link active" href="#">New</a>
+			<a class="nav-link" href="#">History</a>
+			<a class="nav-link" href="#">Graph</a>
+		</nav>
+		<form>
+			<h2>Date and Time</h2>
+			<hr>
+			<div class="row">
+				<div class="col-6 form-floating">
+					<input class="form-control" id="date" type="text" name="date" placeholder="Date">
+					<label for="date">Date</label>
 				</div>
-				<div class="modal-body">
-					<!-- Add exercise form -->
-					<form id="newexercise_form" method="POST" action="#">
-						{% csrf_token %}
-						<div class="form-floating mb-3">
-							<input class="form-control" id="exercise_name" type="text" name="name" autocomplete="off" placeholder="Name">
-							<label for="exercise_name">Name</label>
-						</div>
-						<div class="form-floating mb-3">
-							<select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-								{% for method in methods %}
-									<option value="{{ method.0 }}">{{ method.1 }}</option>
-								{% endfor %}
-							</select>
-							<label for="floatingSelect">Exercise type:</label>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save exercise</button>
+				<div class="col-6 form-floating">
+					<input class="form-control" id="time" type="text" name="time" placeholder="Time">
+					<label for="time">Time</label>
 				</div>
 			</div>
-		</div>
+			<br>
+			<h2>Set</h2>
+			<hr>
+			<div class="row">
+				<div class="col-5 form-floating">
+					<input class="form-control" id="reps" type="text" name="reps" placeholder="reps">
+					<label for="reps">reps</label>
+				</div>
+				<div class="col-2">
+					<span id="repdescriptor" class="form-text">
+					reps @
+					</span>
+				</div>
+				<div class="col-5 form-floating">
+					<input class="form-control" id="weight" type="text" name="weight" placeholder="weight">
+					<label for="weight">weight</label>
+				</div>
+			</div>
+			<br>
+			<h2>Notes</h2>
+			<hr>
+			<div class="row">
+				<div class="col-12 form-floating">
+					<textarea class="form-control" placeholder="Notes" id="notes" style="height: 100px;"></textarea>
+					<label for="notes">Notes</label>
+				</div>
+			</div>
+		</form>
 	</div>
 {% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'logger/dblayout.html' %}
+
+{% block title %}Exercises{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center">Exercises</h1>
+		<!-- List each exercise per user -->
+		{% for exercise in exercises %}
+			<div class="p-3 bg-light border-bottom">
+				<a class="" href="{% url 'exercise' exercise.id %}">{{ exercise.name }}</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<!-- Button to trigger add exercise modal -->
+	<div class="row mt-2">
+		<button type="button" class="btn btn-primary col-1 offset-10" data-bs-toggle="modal" data-bs-target="#Addexercise">
+			Add
+		</button>
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="Addexercise" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="ModalLabel">Add exercise</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- Add exercise form -->
+					<form id="newexercise_form" method="POST" action="{% url 'new_exercise' %}">
+						{% csrf_token %}
+						<div class="form-floating mb-3">
+							<input class="form-control" id="exercise_name" type="text" name="name" autocomplete="off" placeholder="Name">
+							<label for="exercise_name">Name</label>
+						</div>
+						<div class="form-floating mb-3">
+							<select class="form-select" id="floatingSelect" name="method" aria-label="Floating label select example">
+								{% for method in methods %}
+									<option value="{{ method.0 }}">{{ method.1 }}</option>
+								{% endfor %}
+							</select>
+							<label for="floatingSelect">Exercise type:</label>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" form="newexercise_form" class="btn btn-primary">Save exercise</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

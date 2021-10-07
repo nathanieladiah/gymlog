@@ -76,13 +76,31 @@ def dashboard(request):
 	return render(request, "logger/dashboard.html")
 
 @login_required
-def exercise(request):
+def exercises(request):
 
 	user = request.user
 	# Get the exercises that the user has created.
 	exercises = Exercise.objects.filter(user=user).all()
 
-	return render(request, "logger/exercise.html", {
+	return render(request, "logger/exercises.html", {
 		"exercises": exercises,
 		"methods": METHODS
+	})
+
+@login_required
+def new_exercise(request):
+	if request.method == "POST":
+		user = request.user
+		name = request.POST['name']
+		method = request.POST['method']
+		exercise = Exercise(name=name, user=user, method=method)
+		exercise.save()
+		return HttpResponseRedirect(reverse("exercises"))
+
+
+@login_required
+def exercise(request, exercise_id):
+	exercise = Exercise.objects.get(pk=exercise_id)
+	return render(request, "logger/exercise.html", {
+		"exercise": exercise
 	})
