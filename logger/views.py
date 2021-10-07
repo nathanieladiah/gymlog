@@ -98,9 +98,16 @@ def new_exercise(request):
 		return HttpResponseRedirect(reverse("exercises"))
 
 
+# Load page for a specific exercise
 @login_required
 def exercise(request, exercise_id):
 	exercise = Exercise.objects.get(pk=exercise_id)
 	return render(request, "logger/exercise.html", {
 		"exercise": exercise
 	})
+
+
+# Save sets for a specific exercise
+@login_required
+def add_log(request, exercise_id):
+	pass

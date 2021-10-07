@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models.fields import DateField
+from datetime import date
+from django.utils import timezone
 
 # Create your models here.
 METHODS = (
@@ -24,3 +27,14 @@ class Exercise(models.Model):
 
 	def __str__(self):
 		return f"{self.name}"
+
+class Log(models.Model):
+	exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
+	date = models.DateField(default=date.today)
+	time = models.TimeField(default=timezone.now)
+	reps = models.IntegerField()
+	weight = models.IntegerField()
+	notes = models.TextField(blank=True, null=True)
+
+	def __str__(self):
+		return f"{self.exercise.name}: {self.reps} reps @ {self.weight}"
