@@ -72,7 +72,7 @@
 						<div class="row align-items-center">
 							<div class="col-lg-4">
 								<div class="input-style-1">
-									<input type="text" placeholder="Reps">
+									<input id="reps" type="text" placeholder="Reps">
 								</div>
 							</div>
 							<div class="col-lg-2">
@@ -82,13 +82,13 @@
 							</div>
 							<div class="col-lg-3">
 								<div class="input-style-1">
-									<input type="text" placeholder="Weight">
+									<input id="weight" type="text" placeholder="Weight">
 								</div>
 							</div>
 							<div class="col-lg-2">
 								<div class="select-style-1">
 									<div class="select-position">
-										<select>
+										<select id="units">
 											<option value="">Unit</option>
 											{% for unit in units %}
 												<option value="{{ unit.0 }}">{{ unit.1 }}</option>
@@ -98,19 +98,20 @@
 								</div>
 							</div>
 
-							<button type="button" class="btn col-lg-1 add-button">
+							<button id="add-set" type="button" class="btn col-lg-1 add-button">
 								<i class="fa-solid fa-circle-plus"></i>
 							</button>
 							<!-- end col -->
 						</div>
 						<!-- end row -->
 						<!-- Place to add sets for current exercise -->
-						<div id="currentsets" class="fs-5">
-							<div class="row">
-								<div class="col-12">
+						<div id="currentsets" class="fs-5 row">
+								<div class="col-10">
 									10 reps @ 25lb
 								</div>
-							</div>
+								<button type="button" class="btn col-lg-1 edit-set">
+									<i class="fa-solid fa-chevron-down"></i>
+								</button>
 						</div>
 						<!-- end current sets -->
 					</div>
@@ -134,4 +135,6 @@
 		</div>
 		<!-- end container -->
 	</section>
+	<script src="{% static 'logger/db/js/exercise.js' %}"></script>
+
 {% endblock %}

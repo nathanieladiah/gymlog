@@ -107,7 +107,72 @@ The app is used to track fitness progress, especially in terms of weights lifted
 
 ## Create graphic design
 
+**Register Page**    
 
+![Register Page](/images/testscreens/register-1.png "Register web page")
+
+![Register Page](/images/testscreens/register-2.png "Register web page")
+
+
+**Register Page - mobile**  
+![Register Page - mobile](/images/testscreens/register-mobile-1.png)
+
+![Register Page - mobile](/images/testscreens/register-mobile-2.png)
+
+**Login Page**  
+![Login Page](/images/testscreens/login.png)
+
+**Login Page mobile**  
+![Login Page](/images/testscreens/login-mobile-1.png)
+
+![Login Page](/images/testscreens/login-mobile-2.png)
+
+
+**Dashboard**
+![Homepage](/images/testscreens/db-calendar.png)
+
+**mobile**  
+![Homepage](/images/testscreens/db-calendar-mobile.png)
+
+
+> Shows a calendar alongside a side nav that has links to the other pages: 
+>
+> * Exercise
+> * Routine
+> * etc
+
+**Homepage - mobile**  
+![Homepage](/images/testscreens/menu-mobile.png)
+
+
+> Move the sidebar behind a toggle button 
+
+**Exercises**
+![Exercise list](/images/exercises-list.jpg)
+
+> Gives a list of exercises for each user.
+> A button to add new exercises
+
+**Exercise**
+![Single Exercise](/images/single-exercise.jpg)
+
+> Page with details on each exercise
+>
+> navigation buttons on top for new, history, and graph
+> 
+> default page is the new with form to add new sets of the exercise
+
+**Exercise History**
+![Exercise History](/images/exercise-history.jpg)
+
+> a list with newest first of exercises added
+
+**Add Exercise**
+![Add exercise](/images/add-exercise.jpg)
+
+> A modal to add a new exercise to the user
+
+<br>
 
 
 ## Build Log
@@ -119,3 +184,7 @@ Added logic views for login, logout, and register.
 The exercise page has a button for a modal to add new exercises.
 
 There should be a list of pre programmed-exercises - do this in refinements.
+
+### October 8th 2021
+
+Create a javascript function to add current set information. Should be able to add all the sets for an exercise before submitting the entire form.
