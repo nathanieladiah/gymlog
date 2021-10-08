@@ -1,0 +1,67 @@
+{% extends 'logger/dblayout.html' %}
+
+{% load static %}
+
+{% block title %}{{ exercise.name }}{% endblock %}
+
+{% block css %}<link href="{% static 'logger/db/css/exercise.css' %}" rel="stylesheet">{% endblock %}
+
+{% block body %}
+	<section class="exercise-list">
+		<div class="container-fluid">
+			<!-- ======== title wrapper start ========= -->
+			<div class="title-wrapper pt-30">
+				<div class="row align-items-center">
+					<div class="col-md-6">
+						<div class="title mb-30">
+							<h2>{{ exercise.name }}</h2>
+						</div>
+					</div>
+					<!-- end col -->
+					<div class="col-md-6">
+						<div class="nav-wrapper mb-30">
+							<nav>
+								<ul class="nav exercise-nav">
+									<li class="nav-item">
+										<a class="nav-link" href="{% url 'exercise' exercise.id %}">New</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link active" href="#">History</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#">Graph</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+					<!-- end col -->
+				</div>
+				<!-- end row -->
+			</div>
+			<!-- ======== title wrapper end ========== -->
+
+			<!-- ======= exercise logs start ======= -->
+			<div class="log-wrapper">
+				<div class="log mb-30 p-2">
+					<h3 class="mb-2">Friday 8th October 2021</h3>
+					<ul>
+						<li>10 reps @ 45lb</li>
+						<li>10 reps @ 45lb</li>
+						<li>10 reps @ 45lb</li>
+						<li>10 reps @ 45lb</li>
+					</ul>
+				</div>
+				<div class="log mb-30 p-2">
+					<h3 class="mb-2">Monday 4th October 2021</h3>
+					<ul>
+						<li>10 reps @ 45lb</li>
+					</ul>
+				</div>
+
+			</div>
+			<!-- ======= exercise logs end ========= -->
+		</div>
+		<!-- end container -->
+	</section>
+{% endblock %}

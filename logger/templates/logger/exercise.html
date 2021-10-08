@@ -1,56 +1,137 @@
 {% extends 'logger/dblayout.html' %}
 
+{% load static %}
+
 {% block title %}{{ exercise.name }}{% endblock %}
 
+{% block css %}<link href="{% static 'logger/db/css/exercise.css' %}" rel="stylesheet">{% endblock %}
+
 {% block body %}
-	<div class="container-fluid">
-		<h1 class="text-center mb-2">{{ exercise.name }}</h1>
-		
-		<nav class="nav justify-content-between mb-4">
-			<a class="nav-link active" href="#">New</a>
-			<a class="nav-link" href="#">History</a>
-			<a class="nav-link" href="#">Graph</a>
-		</nav>
-		<form>
-			<h2>Date and Time</h2>
-			<hr>
-			<div class="row">
-				<div class="col-6 form-floating">
-					<input class="form-control" id="date" type="text" name="date" placeholder="Date">
-					<label for="date">Date</label>
+	<section class="exercise-list">
+		<div class="container-fluid">
+			<!-- ======== title wrapper start ========= -->
+			<div class="title-wrapper pt-30">
+				<div class="row align-items-center">
+					<div class="col-md-6">
+						<div class="title mb-30">
+							<h2>{{ exercise.name }}</h2>
+						</div>
+					</div>
+					<!-- end col -->
+					<div class="col-md-6">
+						<div class="nav-wrapper mb-30">
+							<nav>
+								<ul class="nav exercise-nav">
+									<li class="nav-item">
+										<a class="nav-link active" href="#">New</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="{% url 'history' exercise.id %}">History</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#">Graph</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+					<!-- end col -->
 				</div>
-				<div class="col-6 form-floating">
-					<input class="form-control" id="time" type="text" name="time" placeholder="Time">
-					<label for="time">Time</label>
-				</div>
+				<!-- end row -->
 			</div>
-			<br>
-			<h2>Set</h2>
-			<hr>
-			<div class="row">
-				<div class="col-5 form-floating">
-					<input class="form-control" id="reps" type="text" name="reps" placeholder="reps">
-					<label for="reps">reps</label>
-				</div>
-				<div class="col-2">
-					<span id="repdescriptor" class="form-text">
-					reps @
-					</span>
-				</div>
-				<div class="col-5 form-floating">
-					<input class="form-control" id="weight" type="text" name="weight" placeholder="weight">
-					<label for="weight">weight</label>
-				</div>
+			<!-- ======== title wrapper end ========== -->
+
+			<!-- ======== new exercise log form start ======= -->
+			<div class="form-wrapper">
+				<form>
+					<!-- Date and time card start -->
+					<div class="card-style mb-30">
+						<h6 class="mb-25">Date and Time</h6>
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="input-style-1">
+									<!-- <label>Date</label> -->
+									<input type="date">
+								</div>
+							</div>
+							<!-- end col -->
+							<div class="col-lg-6">
+								<div class="input-style-2">
+									<!-- <label>Time</label> -->
+									<input type="time">
+								</div>
+							</div>
+						</div>
+						<!-- end row -->
+					</div>
+					<!-- end Date and time card -->
+
+					<!-- Set card start -->
+					<div class="card-style mb-30">
+						<h6 class="mb-25">Set</h6>
+						<div class="row align-items-center">
+							<div class="col-lg-4">
+								<div class="input-style-1">
+									<input type="text" placeholder="Reps">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="align-self-center">
+									reps @
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="input-style-1">
+									<input type="text" placeholder="Weight">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="select-style-1">
+									<div class="select-position">
+										<select>
+											<option value="">Unit</option>
+											{% for unit in units %}
+												<option value="{{ unit.0 }}">{{ unit.1 }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<button type="button" class="btn col-lg-1 add-button">
+								<i class="fa-solid fa-circle-plus"></i>
+							</button>
+							<!-- end col -->
+						</div>
+						<!-- end row -->
+						<!-- Place to add sets for current exercise -->
+						<div id="currentsets" class="fs-5">
+							<div class="row">
+								<div class="col-12">
+									10 reps @ 25lb
+								</div>
+							</div>
+						</div>
+						<!-- end current sets -->
+					</div>
+					<!-- end card -->
+					<!-- Notes card start -->
+					<div class="card-style mb-30">
+						<h6 class="mb-25">Notes</h6>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="input-style-1">
+									<textarea placeholder="Notes" rows="3"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end card -->
+					<button class="main-btn primary-btn btn-hover">Save</button>
+				</form>
 			</div>
-			<br>
-			<h2>Notes</h2>
-			<hr>
-			<div class="row">
-				<div class="col-12 form-floating">
-					<textarea class="form-control" placeholder="Notes" id="notes" style="height: 100px;"></textarea>
-					<label for="notes">Notes</label>
-				</div>
-			</div>
-		</form>
-	</div>
+			<!-- ======== new exercise log form end ========= -->
+		</div>
+		<!-- end container -->
+	</section>
 {% endblock %}

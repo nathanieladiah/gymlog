@@ -1,0 +1,39 @@
+.add-button {
+	font-size: 2em;
+	transition: all .2s ease-in-out;
+}
+
+.add-button:hover {
+	transform: scale(1.2);
+}
+
+.exercise-link {
+	display: block;
+	transition: all .2s ease-in-out;
+}
+
+.exercise-name {
+	background-color: #ffffff;
+}
+
+.exercise-name:hover {
+	background-color: #d3d3d3;
+}
+
+.exercise-nav .nav-link {
+	color: black;
+	margin: 0 2px;
+}
+
+.exercise-nav .nav-link:hover {
+	border-bottom: 3px solid rgba(0, 0, 0, 0.25);
+	color: rgba(0, 0, 0, 0.25);
+}
+
+.exercise-nav .active {
+	border-bottom: 3px solid black;
+}
+
+.log {
+	border-bottom: 1px solid rgba(0, 0, 0, .5);
+}

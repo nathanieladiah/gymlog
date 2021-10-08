@@ -29,11 +29,16 @@ class Exercise(models.Model):
 		return f"{self.name}"
 
 class Log(models.Model):
+	UNITS = (
+		("lb", "pounds"),
+		("kg", "kilograms")
+	)
 	exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
 	date = models.DateField(default=date.today)
 	time = models.TimeField(default=timezone.now)
 	reps = models.IntegerField()
 	weight = models.IntegerField()
+	unit = models.CharField(max_length=3, choices=UNITS, default="lb")
 	notes = models.TextField(blank=True, null=True)
 
 	def __str__(self):

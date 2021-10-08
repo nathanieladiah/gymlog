@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 
-from .models import User, Exercise
+from .models import Log, User, Exercise
 from django.db import IntegrityError
 # Create your views here.
 
@@ -72,6 +72,7 @@ def register(request):
 		return render(request, "logger/register.html")
 
 
+@login_required(login_url='login/')
 def dashboard(request):
 	return render(request, "logger/dashboard.html")
 
@@ -80,7 +81,7 @@ def exercises(request):
 
 	user = request.user
 	# Get the exercises that the user has created.
-	exercises = Exercise.objects.filter(user=user).all()
+	exercises = Exercise.objects.filter(user=user).order_by('name').all()
 
 	return render(request, "logger/exercises.html", {
 		"exercises": exercises,
@@ -101,13 +102,40 @@ def new_exercise(request):
 # Load page for a specific exercise
 @login_required
 def exercise(request, exercise_id):
+	UNITS = (
+		("lb", "pounds"),
+		("kg", "kilograms")
+	)
 	exercise = Exercise.objects.get(pk=exercise_id)
 	return render(request, "logger/exercise.html", {
-		"exercise": exercise
+		"exercise": exercise,
+		"units": UNITS
 	})
 
 
 # Save sets for a specific exercise
 @login_required
 def add_log(request, exercise_id):
-	pass
+
+	UNITS = (
+		("lb", "pounds"),
+		("kg", "kilograms")
+	)
+
+	if request.method == "POST":
+		exercise = Exercise.objects.get(pk=exercise_id)
+		date  = request.POST['date']
+		time = request.POST['time']
+		reps = request.POST['reps']
+		weight = request.POST['weight']
+		unit = request.POST['units']
+		notes = request.POST['notes']
+
+@login_required
+def history(request, exercise_id):
+	exercise = Exercise.objects.get(pk=exercise_id)
+	logs = Log.objects.filter(exercise=exercise).all()
+	return render(request, "logger/history.html", {
+		"exercise": exercise,
+		"logs": logs
+	})
