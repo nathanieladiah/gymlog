@@ -1,0 +1,97 @@
+{% extends 'logger/dblayout.html' %}
+
+{% load static %}
+
+{% block title %}{{ date }}{% endblock %}
+
+{% block css %}<link href="{% static 'logger/db/css/day.css' %}" rel="stylesheet">{% endblock %}
+
+{% block body %}
+	<section class="exercise-list">
+		<div class="container-fluid">
+			<!-- ======== title wrapper start ========= -->
+			<div class="title-wrapper pt-30">
+				<div class="row align-items-center">
+					<div class="col-md-6">
+						<div class="title mb-30">
+							<h2>{{ date }}</h2>
+						</div>
+					</div>
+					<!-- end col -->
+					<div class="col-md-6">
+						<div class="nav-wrapper mb-30">
+							<nav>
+								<ul class="nav exercise-nav">
+									<li class="nav-item">
+										<a class="nav-link" href="#">Prev</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#">Next</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+					<!-- end col -->
+				</div>
+				<!-- end row -->
+			</div>
+			<!-- ======= title wrapper end ========= -->
+
+			<!-- ========= day page wrapper start ======== -->
+			<div class="day-page-wrapper">
+				<div class="row">
+					<!-- exercise log -->
+					<div class="col-lg-4">
+						<div class="card-style mb-30">
+							<div class="log-wrapper">
+								<div class="log mb-30 p-2">
+									<h3 class="mb-2">Benchpress</h3>
+									<ul>
+										<li>10 reps @ 45lb</li>
+										<li>10 reps @ 45lb</li>
+										<li>10 reps @ 45lb</li>
+										<li>10 reps @ 45lb</li>
+									</ul>
+								</div>
+								<div class="log mb-30 p-2">
+									<h3 class="mb-2">Pullups</h3>
+									<ul>
+										<li>10 reps @ 45lb</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						<!-- end card -->
+					</div>
+					<!-- end col -->
+					<!-- journal page -->
+					<div class="col-lg-8">
+						<div class="card-style mb-30">
+							<div id="paper">
+								<div id="pattern">
+									<div id="content">
+										<p><strong>4:00pm</strong></p>
+										<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat, assumenda ab voluptas, fugit natus tenetur voluptates accusantium et quam delectus, molestiae similique neque ipsam nulla itaque libero vitae aperiam quas!</p>
+										<br>
+										<p><strong>5:00pm</strong></p>
+										<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error architecto praesentium reiciendis quas eveniet, voluptates voluptatem quae beatae optio porro fugit vero atque nisi sequi consectetur reprehenderit et assumenda rerum.</p>
+										<br>
+										<p><strong>5:30pm</strong></p>
+										<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe necessitatibus ad quibusdam fugit dignissimos optio corrupti consectetur porro eius id odio tenetur consequatur recusandae alias, labore hic tempore doloremque cupiditate.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end card -->
+					</div>
+					<!-- end col -->
+				</div>
+				<!-- end row -->
+			</div>
+			<!-- ========= day page wrapper end ========== -->
+		</div>
+		<!-- end container -->
+	</section>
+{% endblock %}

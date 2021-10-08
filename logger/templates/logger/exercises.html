@@ -24,30 +24,11 @@
 			<!-- ======== title wrapper end ========== -->
 
 			<!-- ======== exercise list wrapper start ====== -->
-			<!-- <div class="exercise-list-wrapper">
-				<div class="table-wrapper table-responsive">
-					<table class="table">
-						<tbody>
-							<tr>
-								<td>
-									<a href="#" class="text-decoration-none text-dark">Benchpress</a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div> -->
-
 			<!-- List each exercise per user -->
 			{% for exercise in exercises %}
 				<div class="p-3 border-bottom exercise-name">
 					<a class="text-dark exercise-link" href="{% url 'exercise' exercise.id %}">{{ exercise.name }}</a>
 				</div>
-				<!-- <a href="{% url 'exercise' exercise.id %}">
-					<div class="p-3 bg-light border-bottom">
-						{{ exercise.name }}
-					</div> -->
-				</a>
 			{% endfor %}
 			<!-- ======== exercise list wrapper end ========= -->
 

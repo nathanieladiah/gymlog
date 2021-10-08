@@ -1,5 +1,20 @@
 const date = new Date();
 
+document.addEventListener('DOMContentLoaded', () => {
+	renderCalendar();
+
+	document.querySelector('.prev').addEventListener('click', () => {
+		date.setMonth(date.getMonth() - 1)
+		renderCalendar()
+	})
+
+	document.querySelector('.next').addEventListener('click', () => {
+		date.setMonth(date.getMonth() + 1)
+		renderCalendar()
+	})
+
+})
+
 const renderCalendar = () => {
 	date.setDate(1);
 	// console.log(date.getDay()) // Gives the index number of the day of the week for the date.
@@ -68,20 +83,20 @@ const renderCalendar = () => {
 
 
 
-document.querySelector('.prev').addEventListener('click', () => {
-	date.setMonth(date.getMonth() - 1)
-	renderCalendar()
-})
+// document.querySelector('.prev').addEventListener('click', () => {
+// 	date.setMonth(date.getMonth() - 1)
+// 	renderCalendar()
+// })
 
-document.querySelector('.next').addEventListener('click', () => {
-	date.setMonth(date.getMonth() + 1)
-	renderCalendar()
-})
+// document.querySelector('.next').addEventListener('click', () => {
+// 	date.setMonth(date.getMonth() + 1)
+// 	renderCalendar()
+// })
 
-document.querySelector('.current-month').addEventListener('click', () => {
-	date.setMonth(date.getMonth())
-	// console.log(date);
-	renderCalendar()
-})
+// document.querySelector('.current-month').addEventListener('click', () => {
+// 	date.setMonth(date.getMonth())
+// 	// console.log(date);
+// 	renderCalendar()
+// })
 
-renderCalendar()
+// renderCalendar()

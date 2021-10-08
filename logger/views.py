@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.views.generic.dates import DayArchiveView
 
 
 from .models import Log, User, Exercise
@@ -139,3 +140,26 @@ def history(request, exercise_id):
 		"exercise": exercise,
 		"logs": logs
 	})
+
+@login_required
+def journal(request):
+	return render(request, "logger/journal.html")
+
+@login_required
+def day(request, date):
+	return render(request, "logger/date.html", {
+		"date": date
+	})
+
+@login_required
+def settings(request):
+	return render(request, "logger/settings.html")
+
+@login_required
+def routines(request):
+	return render(request, "logger/routines.html")
+
+# class LogDayArchiveView(DayArchiveView):
+# 	queryset = Log.objects.filter(user=request.user).all()
+# 	date_field = "date"
+# 	allow_future=True

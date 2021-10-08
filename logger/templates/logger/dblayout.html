@@ -49,15 +49,21 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">
+					<a class="nav-link" href="{% url 'routines' %}">
 						<i class="fa-solid fa-calendar-day icon"></i>
 						<span class="text">Routine</span>
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">
+					<a class="nav-link" href="{% url 'journal' %}">
 						<i class="fa-solid fa-book icon"></i>
 						Journal
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'day' '8-Oct-2021' %}">
+						<i class="fa-solid fa-triangle-exclamation icon"></i>
+						Date-Test
 					</a>
 				</li>
 			</ul>
@@ -121,7 +127,7 @@
 									aria-labelledby="profile"
 								>
 									<li>
-										<a href="#"><i class="lni lni-cog"></i>Settings</a>
+										<a href="{% url 'settings' %}"><i class="lni lni-cog"></i>Settings</a>
 									</li>
 									<li>
 										<a href="{% url 'logout' %}"><i class="lni lni-exit"></i>Sign Out</a>

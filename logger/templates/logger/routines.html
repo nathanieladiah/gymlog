@@ -1,0 +1,84 @@
+{% extends 'logger/dblayout.html' %}
+
+{% load static %}
+
+{% block title %}Routines{% endblock %}
+
+{% block css %}<link href="{% static 'logger/db/css/routines.css' %}" rel="stylesheet">{% endblock %}
+
+{% block body %}
+	<section class="routine-list">
+		<div class="container-fluid">
+			<!-- ======== title wrapper start ========= -->
+			<div class="title-wrapper pt-30">
+				<div class="row align-items-center">
+					<div class="col-md-6">
+						<div class="title mb-30">
+							<h2>Routines</h2>
+						</div>
+					</div>
+					<!-- end col -->
+				</div>
+				<!-- end row -->
+			</div>
+			<!-- ======== title wrapper end ========== -->
+
+			<!-- ======== routine list wrapper start ====== -->
+			<!-- List each routine per user -->
+			{% for routine in routines %}
+				<div class="p-3 border-bottom routine-name">
+					<a class="text-dark routine-link" href="#">{{ routine.name }}</a>
+				</div>
+			{% endfor %}
+			<div class="p-3 border-bottom routine-name">
+				<a class="text-dark routine-link" href="#">Chest</a>
+			</div>
+			<div class="p-3 border-bottom routine-name">
+				<a class="text-dark routine-link" href="#">Legs</a>
+			</div>
+			<div class="p-3 border-bottom routine-name">
+				<a class="text-dark routine-link" href="#">Arms</a>
+			</div>
+			<div class="p-3 border-bottom routine-name">
+				<a class="text-dark routine-link" href="#">Back</a>
+			</div>
+			<!-- ======== routine list wrapper end ========= -->
+
+			<!-- ======== add exercise button start ======== -->
+			<div class="row mt-2">
+				<button type="button" class="btn col-1 offset-11 add-button" data-bs-toggle="modal" data-bs-target="#Addroutine">
+					<i class="fa-solid fa-circle-plus"></i>
+				</button>
+			</div>
+			<!-- ======== add exercise button end ======== -->
+
+			<!-- ======== modal start ========== -->
+			<div class="modal fade" id="Addroutine" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="ModalLabel">Add routine</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+						</div>
+						<div class="modal-body">
+							<!-- Add exercise form -->
+							<form id="newroutine_form" method="POST" action="#">
+								{% csrf_token %}
+								<div class="form-floating mb-3">
+									<input class="form-control" id="routine_name" type="text" name="name" autocomplete="off" placeholder="Name">
+									<label for="routine_name">Name</label>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button type="submit" form="newroutine_form" class="btn btn-primary">Save routine</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ======== modal end ============ -->
+		</div>
+		<!-- end container -->
+	</section>
+{% endblock %}
