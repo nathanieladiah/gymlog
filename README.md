@@ -229,3 +229,22 @@ finished. Using django html templates
 **Journal Page**
 Using either a week archive view or a month archive view, probably do a month
 The journal link in the navbar needs to automatically have the month in the href, do a custom thing where the current month is available on all views (check auction)
+
+**custom_context_processor.py**
+
+	from datetime import datetime 
+
+	def journal_link_renderer(request):
+		now = datetime.now()
+		current_month = now.strftime("%Y/%b")
+		return {
+			'current_month': current_month
+		}
+
+use datetime module and pass in date.today()
+or datetime.now().date()
+
+or in template use `{% now "l, j F Y" %}`
+need the format journal/year/month eg journal/2021/sep  "Y/M"
+
+`{% now "P" %}` gives the current time
