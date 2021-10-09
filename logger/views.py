@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.urls import reverse
-from django.views.generic.dates import DayArchiveView
+from django.views.generic.dates import DayArchiveView, MonthArchiveView
 
 
 from .models import Log, User, Exercise, Set
@@ -184,6 +184,12 @@ def history(request, exercise_id):
 @login_required
 def journal(request):
 	return render(request, "logger/journal.html")
+
+class LogMonthArchiveView(MonthArchiveView):
+	queryset = Log.objects.all()
+	date_field = "date"
+	allow_future = True
+	template_name = "logger/journal.html"
 
 @login_required
 def day(request, date):

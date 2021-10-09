@@ -222,3 +222,10 @@ Considering, saving the sets as a javascript object field in the log table, or c
 Next step is to focus on the history part of the exercises
 
 Need to display the Sets for each log for the exercise page
+finished. Using django html templates
+
+**Create javascript to add active to sidebar depending on the page**
+
+**Journal Page**
+Using either a week archive view or a month archive view, probably do a month
+The journal link in the navbar needs to automatically have the month in the href, do a custom thing where the current month is available on all views (check auction)
