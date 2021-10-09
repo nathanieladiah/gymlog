@@ -58,7 +58,22 @@
 						<li>10 reps @ 45lb</li>
 					</ul>
 				</div>
-
+				{% for log in logs %}
+					<div class="log mb-30 p-2">
+						<!-- TODO display the date in a prettier format -->
+						<h3 class="mb-2">{{ log.date }} ({{ log.time }})</h3>
+						<ul>
+							{% for queryset in sets %}
+								{% for set in queryset %}
+									{% if set.log == log %}
+										<li>{{ set.reps }} reps @ {{ set.weight }}{{ set.units }}</li>
+									{% endif %}
+								{% endfor %}
+								<li>{{ set }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endfor %}
 			</div>
 			<!-- ======= exercise logs end ========= -->
 		</div>

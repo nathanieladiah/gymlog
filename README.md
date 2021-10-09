@@ -188,3 +188,37 @@ There should be a list of pre programmed-exercises - do this in refinements.
 ### October 8th 2021
 
 Create a javascript function to add current set information. Should be able to add all the sets for an exercise before submitting the entire form.
+
+How to implement the functions?
+
+#### Saving new exercise logs
+
+* need to take the info from exercise form and store it into the database.
+	* date
+	* time
+	* exercise name
+	* notes
+	* list of sets (reps, weights, units)
+
+* Store the weight, reps, and units in datasets in each div, with an incrementing id
+
+
+* Store sets in a separate table, and link it to logs:
+	* many-to-many? 1 log can have many sets, but each set only belongs in one log.
+
+|**Logs**| **Set** |
+| --- | --- |
+| date | weight |
+| time | reps | 
+| exercise name | unit |
+| notes |
+| set |
+
+### October 9th 2021
+
+Created javascript function to perform Ajax request when new log form is submitted. Adds data to the database and redirects afterwards.
+Considering, saving the sets as a javascript object field in the log table, or creating a set group instead of having them all separate, or just group them by date and exercise?
+
+Next step is to focus on the history part of the exercises
+
+Need to display the Sets for each log for the exercise page

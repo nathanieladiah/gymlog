@@ -3,18 +3,20 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.fields import DateField
 from datetime import date
 from django.utils import timezone
+from django.core.validators import MaxValueValidator, MinValueValidator
 
-# Create your models here.
-METHODS = (
-	("car", "Cardio"),
-	("wgt", "Strength Training")
-)
+# # Create your models here.
+
 
 
 class User(AbstractUser):
 	pass
 
 class Exercise(models.Model):
+	METHODS = (
+		("car", "Cardio"),
+		("wgt", "Strength Training")
+	)
 
 	name = models.CharField(max_length=120)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -28,18 +30,27 @@ class Exercise(models.Model):
 	def __str__(self):
 		return f"{self.name}"
 
-class Log(models.Model):
+class Set(models.Model):
 	UNITS = (
 		("lb", "pounds"),
 		("kg", "kilograms")
 	)
+
+	weight = models.DecimalField(max_digits=10, decimal_places=2)
+	reps = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
+	units = models.CharField(max_length=3, choices=UNITS, default="lb")
+	log = models.ForeignKey("Log", on_delete=models.CASCADE, null=True, blank=True)
+
+	def __str__(self):
+		return f"{self.log.exercise.name}: {self.reps} reps"
+
+class Log(models.Model):
 	exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
 	date = models.DateField(default=date.today)
 	time = models.TimeField(default=timezone.now)
-	reps = models.IntegerField()
-	weight = models.IntegerField()
-	unit = models.CharField(max_length=3, choices=UNITS, default="lb")
 	notes = models.TextField(blank=True, null=True)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	# set = models.ForeignKey(Set, on_delete=models.CASCADE, null=True, blank=True)
 
 	def __str__(self):
-		return f"{self.exercise.name}: {self.reps} reps @ {self.weight}"
+		return f"{self.exercise.name}: {self.date} @ {self.time}"
