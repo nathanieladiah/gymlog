@@ -36,9 +36,9 @@
 						<p><strong>Saturday 9th October 2021</strong></p>
 						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe necessitatibus ad quibusdam fugit dignissimos optio corrupti consectetur porro eius id odio tenetur consequatur recusandae alias, labore hic tempore doloremque cupiditate.</p> -->
 						{% for log in object_list %}
-							<p><strong>{{ log.date|date:"l F jS, Y" }}</strong></p>
-							<p>{{ log.notes }}</p>
-							<br>
+								<p><strong>{{ log.date|date:"l F jS, Y" }}</strong></p>
+								<p>{{ log.notes }}</p>
+								<br>
 						{% endfor %}
 					</div>
 				</div>

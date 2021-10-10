@@ -248,3 +248,15 @@ or in template use `{% now "l, j F Y" %}`
 need the format journal/year/month eg journal/2021/sep  "Y/M"
 
 `{% now "P" %}` gives the current time
+
+Need to group journal entries by the date:
+
+	from django.db.models import Count
+	result = (Log.objects
+		.values('notes', 'date')
+		.annotate(dcount=Count('date'))
+		.order_by()
+	)
+
+**New idea** use javascript to populate the day and journal pages, using ajax do something similar to the calendar.
+Would putting the javascript in a script tag in the html allow the urls to work with the django template?

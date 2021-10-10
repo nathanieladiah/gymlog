@@ -55,13 +55,13 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{% url 'archive_month' current_year current_month %}">
+					<a class="nav-link" href="{% url 'journal' current_year current_month %}">
 						<i class="fa-solid fa-book icon"></i>
 						Journal
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{% url 'day' '8-Oct-2021' %}">
+					<a class="nav-link" href="{% url 'day' current_year current_month current_day %}">
 						<i class="fa-solid fa-triangle-exclamation icon"></i>
 						Date-Test
 					</a>

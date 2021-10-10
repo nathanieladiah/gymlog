@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.urls import reverse
 from django.views.generic.dates import DayArchiveView, MonthArchiveView
+from django.db.models import Count
+from django.utils.decorators import method_decorator
 
 
 from .models import Log, User, Exercise, Set
@@ -182,20 +184,42 @@ def history(request, exercise_id):
 	})
 
 @login_required
-def journal(request):
+def journal(request, year, month):
 	return render(request, "logger/journal.html")
 
-class LogMonthArchiveView(MonthArchiveView):
-	queryset = Log.objects.all()
-	date_field = "date"
-	allow_future = True
-	template_name = "logger/journal.html"
+# @method_decorator(login_required, name='dispatch')
+# class LogMonthArchiveView(MonthArchiveView):
+	
+# 	queryset = Log.objects.all()
+# 	# queryset = (Log.objects
+# 	# 	.values('notes', 'date')
+# 	# 	.annotate(dcount=Count('date'))
+# 	# 	.order_by()
+# 	# )
+# 	date_field = "date"
+# 	allow_future = True
+# 	template_name = "logger/journal.html"
+
 
 @login_required
-def day(request, date):
+def day(request, day, month, year):
+	# TODO create a datetime object from a string using datetime.strptime()
+	# date = 
+	# logs = Log.objects.filter(user=request.user).filter(date=date).all()
+	logs = Log.objects.filter(user=request.user).all()
 	return render(request, "logger/date.html", {
-		"date": date
+		"logs": logs,
+		"day": day,
+		"month": month,
+		"year":year
+		# "date": date
 	})
+
+# class LogDayArchiveView(DayArchiveView):
+# 	queryset = Log.objects.all()
+# 	date_field = "date"
+# 	allow_future = True
+# 	template_name = "logger/date.html"
 
 @login_required
 def settings(request):
@@ -209,3 +233,9 @@ def routines(request):
 # 	queryset = Log.objects.filter(user=request.user).all()
 # 	date_field = "date"
 # 	allow_future=True
+
+@login_required
+# Take some integers as input and return a url for the corresponding date
+def calendar_day(request, day, month, year):
+	url = reverse('day', args=(year, month, day))
+	return JsonResponse({"url": url}, status=201,)

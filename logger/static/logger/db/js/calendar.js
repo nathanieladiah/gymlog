@@ -2,6 +2,7 @@ const date = new Date();
 
 document.addEventListener('DOMContentLoaded', () => {
 	renderCalendar();
+	// addDateLinks();
 
 	document.querySelector('.prev').addEventListener('click', () => {
 		date.setMonth(date.getMonth() - 1)
@@ -63,22 +64,44 @@ const renderCalendar = () => {
 	let days = "";
 
 	for (let x = firstDayIndex; x > 0; x--) {
-		days += `<div class="prev-date">${prevLastDay - x + 1}</div>`
+		days += `<div class="prev-date day">${prevLastDay - x + 1}</div>`
 	}
 
 	for(let i = 1; i <= lastDay; i++) {
 		if(i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
-			days += `<div class="today">${i}</div>`;
+			days += `<div class="today day">${i}</div>`;
 		} else {
-			days += `<div>${i}</div>`;
+			days += `<div class="day">${i}</div>`;
 		}
 		
 	}
 
 	for(let j = 1; j <= nextDays; j++) {
-		days += `<div class="next-date">${j}</div>`
+		days += `<div class="next-date day">${j}</div>`
 		monthDays.innerHTML = days;
 	}
+
+	// TODO write an ajax function to add links to the calendar days
+	// or put event handlers for clicking on the days to load the correct url, still an ajax request to get the
+	// url with reverse
+	 addDateLinks(year, date.getMonth() + 1);
+}
+
+const addDateLinks = (year, current_month) => {
+	// fetch(`calendar_day/${year}/${month}/${day}`)
+	// console.log(year, month);
+	document.querySelectorAll('.day').forEach(date => {
+		// TODO check if next-date or prev-date in classList and update month either +1 or -1
+		month = current_month;
+		date.onclick = () => {
+			let day = date.innerHTML;
+			fetch(`calendar_day/${year}/${month}/${day}`)
+			.then(response => response.json())
+			.then(result => {
+				window.location = result.url;
+			})
+		}
+	})
 }
 
 

@@ -15,6 +15,7 @@
 					<div class="col-md-6">
 						<div class="title mb-30">
 							<h2>{{ date }}</h2>
+							<h2>{{ day }} {{ month }} {{ year }}</h2>
 						</div>
 					</div>
 					<!-- end col -->
@@ -45,21 +46,16 @@
 					<div class="col-lg-4">
 						<div class="card-style mb-30">
 							<div class="log-wrapper">
-								<div class="log mb-30 p-2">
-									<h3 class="mb-2">Benchpress</h3>
-									<ul>
-										<li>10 reps @ 45lb</li>
-										<li>10 reps @ 45lb</li>
-										<li>10 reps @ 45lb</li>
-										<li>10 reps @ 45lb</li>
-									</ul>
-								</div>
-								<div class="log mb-30 p-2">
-									<h3 class="mb-2">Pullups</h3>
-									<ul>
-										<li>10 reps @ 45lb</li>
-									</ul>
-								</div>
+								{% for log in object_list %}
+									<div class="log mb-30 p-2">
+										<h3 class="mb-2">{{ log.exercise.name }}</h3>
+										<ul>
+											{% for set in log.set_set.all %}
+												<li>{{ set.reps }} reps @ {{ set.weight }}{{ set.units }}</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endfor %}
 
 							</div>
 						</div>
@@ -72,14 +68,13 @@
 							<div id="paper">
 								<div id="pattern">
 									<div id="content">
-										<p><strong>4:00pm</strong></p>
-										<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat, assumenda ab voluptas, fugit natus tenetur voluptates accusantium et quam delectus, molestiae similique neque ipsam nulla itaque libero vitae aperiam quas!</p>
-										<br>
-										<p><strong>5:00pm</strong></p>
-										<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error architecto praesentium reiciendis quas eveniet, voluptates voluptatem quae beatae optio porro fugit vero atque nisi sequi consectetur reprehenderit et assumenda rerum.</p>
-										<br>
-										<p><strong>5:30pm</strong></p>
-										<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe necessitatibus ad quibusdam fugit dignissimos optio corrupti consectetur porro eius id odio tenetur consequatur recusandae alias, labore hic tempore doloremque cupiditate.</p>
+										{% for log in object_list %}
+											{% if log.notes %}
+												<p><strong>{{ log.time }}</strong></p>
+												<p>{{ log.notes }}</p>
+												<br>
+											{% endif %}
+										{% endfor %}
 									</div>
 								</div>
 							</div>

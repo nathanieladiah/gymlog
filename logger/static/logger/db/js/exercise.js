@@ -46,7 +46,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
-// Need a way to stop adding empty sets
+// TODO Need a way to stop adding empty sets
 function add_set() {
 	let reps = document.querySelector('#reps').value;
 	let weight = document.querySelector('#weight').value;
