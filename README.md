@@ -273,3 +273,4 @@ will probably rename this view to calendar or something.
 
 
 **Tackle journal now**
+completed

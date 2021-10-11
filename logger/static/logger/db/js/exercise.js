@@ -53,27 +53,30 @@ function add_set() {
 	let units = document.querySelector('#units').value;
 	// console.log(weight, reps, units);
 
-	setCount += 1;
-	const set = document.createElement('div');
-	set.innerHTML = `${reps} reps @ ${weight}${units}`;
-	set.id = `set-${setCount}`;
-	set.classList.add('col-10', 'new-set');
-	set.dataset['reps'] = reps;
-	set.dataset['weight'] = weight;
-	set.dataset['units'] = units;
-	document.querySelector('#currentsets').append(set);
+	if (reps.length > 0 && weight.length > 0 && units.length > 0) {
 
-	const edit = document.createElement('button');
-	edit.id = 'test';
-	edit.classList.add('btn', 'col-lg-1', 'edit-set');
-	edit.dataset['set'] = set.id;
-	edit.setAttribute("type", "button");
+		setCount += 1;
+		const set = document.createElement('div');
+		set.innerHTML = `${reps} reps @ ${weight}${units}`;
+		set.id = `set-${setCount}`;
+		set.classList.add('col-10', 'new-set');
+		set.dataset['reps'] = reps;
+		set.dataset['weight'] = weight;
+		set.dataset['units'] = units;
+		document.querySelector('#currentsets').append(set);
 
-	const icon = document.createElement('i');
-	icon.classList.add("fa-solid", "fa-chevron-down");
-	edit.appendChild(icon);
+		const edit = document.createElement('button');
+		edit.id = 'test';
+		edit.classList.add('btn', 'col-lg-1', 'edit-set');
+		edit.dataset['set'] = set.id;
+		edit.setAttribute("type", "button");
 
-	document.querySelector('#currentsets').append(edit);
+		const icon = document.createElement('i');
+		icon.classList.add("fa-solid", "fa-chevron-down");
+		edit.appendChild(icon);
+
+		document.querySelector('#currentsets').append(edit);
+	}
 };
 
 

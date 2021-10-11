@@ -157,6 +157,7 @@ const logContent = (day, month, year) => {
 				// append the log Object
 				logWrapper.append(logObject);
 
+
 				// create a <strong> inside a <p> for the notes times and a <p> for the note and then a <br>
 				// TODO format the time 
 				if (exerciseLog[1].log_info.notes != "") {

@@ -4,7 +4,10 @@
 
 {% block title %}Journal{% endblock %}
 
-{% block css %}<link href="{% static 'logger/db/css/journal.css' %}" rel="stylesheet">{% endblock %}
+{% block css %}
+	<link href="{% static 'logger/db/css/day.css' %}" rel="stylesheet">
+	<link href="{% static 'logger/db/css/journal.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
 	<section class="training-journal">
@@ -14,10 +17,24 @@
 				<div class="row align-items-center">
 					<div class="col-md-6">
 						<div class="title mb-30">
-							<h2>Training Journal</h2>
+							<h2 id="journal-head" data-month="{{ current_month }}" data-year="{{ current_year }}">Training Journal - <strong id="heading-month"></strong></h2>
 						</div>
 					</div>
 					<!-- end col -->
+					<div class="col-md-6">
+						<div class="nav-wrapper mb-30">
+							<nav>
+								<ul class="nav exercise-nav">
+									<li class="nav-item">
+										<a id="prev" class="nav-link month-seek" href="#">Prev</a>
+									</li>
+									<li class="nav-item">
+										<a id="next" class="nav-link month-seek" href="#">Next</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
 				</div>
 				<!-- end row -->
 			</div>
@@ -47,4 +64,5 @@
 		</div>
 		<!-- end container -->
 	</section>
+	<script src="{% static 'logger/db/js/journal.js' %}"></script>
 {% endblock %}

@@ -10,7 +10,7 @@ urlpatterns = [
 	
 	# utility views
 	path("dashboard", views.dashboard, name="dashboard"), # call this calendar maybe?
-	path("journal/<int:year>/<int:month>/", views.journal, name="journal"),
+	path("journal", views.journal, name="journal"),
 	path("settngs", views.settings, name="settings"),
 	path("routines", views.routines, name="routines"),
 	
@@ -23,4 +23,5 @@ urlpatterns = [
 	# API views
 	path("exercise/<int:exercise_id>/add", views.add_log, name="add_log"), # API url
 	path("day/<date_string>", views.display_day, name="display_day"), # API url
+	path("journal/<month>/<year>", views.get_journal, name="load_journal")
 ]

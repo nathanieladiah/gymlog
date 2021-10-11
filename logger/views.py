@@ -185,17 +185,13 @@ def history(request, exercise_id):
 	})
 
 @login_required
-def journal(request, year, month):
+def journal(request):
 	return render(request, "logger/journal.html")
 
 
 @login_required
 def settings(request):
 	return render(request, "logger/settings.html")
-
-@login_required
-def routines(request):
-	return render(request, "logger/routines.html")
 
 
 @login_required
@@ -219,3 +215,16 @@ def display_day(request, date_string):
 	print(date_object)
 		
 	return JsonResponse(logs, safe=False, status=201)
+
+
+@login_required
+def routines(request):
+	return render(request, "logger/routines.html")
+
+
+@login_required
+# Create an api view that returns all the notes for a user for a specific month
+def get_journal(request, month, year):
+	# date_object = datetime.strptime().date()
+	logs = Log.objects.filter(user=request.user, date__year=year, date__month=month).all()
+	return JsonResponse([log.serialize() for log in logs], safe=False, status=201)
