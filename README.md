@@ -279,7 +279,7 @@ completed
 
 **Outstanding**:  
 [ ] Still need to put an edit option for new sets  
-[ ] Don't let exercises save if there are no sets
+[x] Don't let exercises save if there are no sets
 [ ] Maybe an edit for history of exercises  
 [ ] The graph function for exercises hasn't been started yet  
 [x] Need to check dates when using previous and next buttons in journal and day views  

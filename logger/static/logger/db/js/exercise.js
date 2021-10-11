@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		save_log(date, time, notes, sets);
 		return false;
 	}
+
+	
 });
 
 var setCount = 0;
@@ -65,19 +67,86 @@ function add_set() {
 		set.dataset['units'] = units;
 		document.querySelector('#currentsets').append(set);
 
-		const edit = document.createElement('button');
-		edit.id = 'test';
-		edit.classList.add('btn', 'col-lg-1', 'edit-set');
-		edit.dataset['set'] = set.id;
-		edit.setAttribute("type", "button");
+		// const edit = document.createElement('button');
+		// edit.id = `edit-${setCount}`;
+		// edit.classList.add('btn', 'col-lg-1', 'edit-set');
+		// edit.dataset['set'] = set.id;
+		// edit.setAttribute("type", "button");
+		// edit.onclick = () => {
+		// 	edit_set(set.id, edit.id);
+		// }
 
-		const icon = document.createElement('i');
-		icon.classList.add("fa-solid", "fa-chevron-down");
-		edit.appendChild(icon);
+		// const icon = document.createElement('i');
+		// icon.classList.add("fa-solid", "fa-chevron-down");
+		// edit.appendChild(icon);
 
-		document.querySelector('#currentsets').append(edit);
+		// document.querySelector('#currentsets').append(edit);
+	} else {
+		alert("Set info not filled in")
 	}
 };
+
+// const edit_set = (setId, editId) => {
+// 	console.log(setId, editId);
+// 	const setToEdit = document.querySelector(`#${setId}`);
+// 	const editButton = document.querySelector(`#${editId}`);
+
+// 	const reps = setToEdit.dataset.reps;
+// 	const weight = setToEdit.dataset.weight;
+// 	const units = setToEdit.dataset.units;
+
+// 	setToEdit.style.display = 'none';
+// 	editButton.style.display = 'none';
+
+// 	const editor = document.createElement('div');
+// 	editor.classList.add('set-editor', 'row', 'align-items-center');
+// 	editor.id = `edit-set-${setId}`;
+
+// 	const repsRow = document.createElement('div');
+// 	repsRow.classList.add('col-lg-4', 'input-style-1');
+// 	editor.appendChild(repsRow)
+
+// 	const repEdit = document.createElement('input')
+// 	repEdit.classList.add('input-style-1');
+// 	// repEdit.innerHTML = reps;
+// 	repEdit.setAttribute("type", "text");
+// 	repEdit.setAttribute("value", reps);
+// 	repsRow.appendChild(repEdit);
+
+// 	const weightRow = document.createElement('div');
+// 	weightRow.classList.add('col-lg-3', 'input-style-1');
+// 	editor.appendChild(weightRow)
+
+// 	const weightEdit= document.createElement('input')
+// 	weightEdit.classList.add('input-style-1');
+// 	// weightEdit.innerHTML = weight;
+// 	weightEdit.setAttribute("type", "text");
+// 	weightEdit.setAttribute("value", weight);
+// 	weightRow.appendChild(weightEdit);
+
+// 	// const unitsEdit= document.createElement('input')
+// 	// unitsEdit.classList.add('w-25');
+// 	// unitsEdit.innerHTML = units;
+// 	// editor.appendChild(unitsEdit);
+// 	const saveEditButton = document.createElement('button')
+// 	saveEditButton.classList.add('btn', 'col-lg-1', 'add-button')
+// 	saveEditButton.id = `edit-${setId}`;
+// 	saveEditButton.onclick = () => {
+// 		saveEdit(setId, saveEditButton);
+// 	}
+// 	editor.appendChild(saveEditButton);
+
+// 	const saveIcon = document.createElement('i');
+// 	saveIcon.classList.add('fa-solid', 'fa-check');
+// 	saveEditButton.appendChild(saveIcon);
+
+
+// 	document.querySelector('#currentsets').prepend(editor);
+// }
+
+// const saveEdit = (setId) => {
+
+// }
 
 
 function save_log(date, time, notes, sets) {
@@ -87,27 +156,33 @@ function save_log(date, time, notes, sets) {
 	const form = document.querySelector('#addlog-form');
 	const exercise_id = form.dataset.exercise;
 	console.log(exercise_id, date, time, notes, sets);
+	console.log(sets.length);
 
-	fetch(`/exercise/${exercise_id}/add`, {
-		method: 'POST', 
-		body: JSON.stringify({
-			date: date,
-			time: time,
-			notes: notes,
-			sets: sets
-		}),
-		headers: {'X-CSRFToken': csrftoken}
-	})	
-	.then(response => response.json())
-	.then(result => {
-		console.log(result);
-		if (result.error) {
-			alert(result.error);
-			return;
-		} else {
-			alert(result.message);
-			// TODO have a function to go back to exercises
-			window.location = result.url;
-		}
-	});
+	if (sets.length != 0) {
+		fetch(`/exercise/${exercise_id}/add`, {
+			method: 'POST', 
+			body: JSON.stringify({
+				date: date,
+				time: time,
+				notes: notes,
+				sets: sets
+			}),
+			headers: {'X-CSRFToken': csrftoken}
+		})	
+		.then(response => response.json())
+		.then(result => {
+			console.log(result);
+			if (result.error) {
+				alert(result.error);
+				return;
+			} else {
+				alert(result.message);
+				// TODO have a function to go back to exercises
+				window.location = result.url;
+			}
+		});
+	} else {
+		alert("Please add some sets")
+	}
+
 }
