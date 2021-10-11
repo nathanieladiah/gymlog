@@ -44,6 +44,14 @@ class Set(models.Model):
 	def __str__(self):
 		return f"{self.log.exercise.name}: {self.reps} reps"
 
+	def serialize(self):
+		return {
+			"log": self.log.id,
+			"weight": self.weight,
+			"reps": self.reps,
+			"units": self.units
+		}
+
 class Log(models.Model):
 	exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
 	date = models.DateField(default=date.today)
@@ -54,3 +62,13 @@ class Log(models.Model):
 
 	def __str__(self):
 		return f"{self.exercise.name}: {self.date} @ {self.time}"
+
+	def serialize(self):
+		return {
+			"id": self.id,
+			"exercise": self.exercise.name,
+			"date": self.date,
+			"time": self.time,
+			"notes": self.notes,
+			"username": self.user.username
+		}

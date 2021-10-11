@@ -258,5 +258,18 @@ Need to group journal entries by the date:
 		.order_by()
 	)
 
+### October 10th 2021
 **New idea** use javascript to populate the day and journal pages, using ajax do something similar to the calendar.
 Would putting the javascript in a script tag in the html allow the urls to work with the django template?
+
+**Note** with the defualt font on firefox, the journal writing stays on the line, use these settings on all.
+also, the font size and stye is very pleasing and legible.
+
+Changing all the calendar pages into a link to the same page and then just update it for each day.
+put the calendar on the same page as the day.html elements and just hide the calendar on click
+
+completed using single page for calendar and all dates. via javascript
+will probably rename this view to calendar or something.
+
+
+**Tackle journal now**

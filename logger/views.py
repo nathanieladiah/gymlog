@@ -1,3 +1,5 @@
+import datetime
+from datetime import datetime
 import json
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -19,7 +21,11 @@ METHODS = (
 )
 
 def index(request):
-	return render(request, "logger/index.html")
+	if request.user.is_authenticated:
+		return render(request, "logger/dashboard.html")
+
+	else:
+		return render(request, "logger/index.html")
 
 
 def login_view(request):
@@ -78,7 +84,7 @@ def register(request):
 
 @login_required(login_url='login/')
 def dashboard(request):
-	return render(request, "logger/dashboard.html")
+	return render(request, "logger/calendar.html")
 
 @login_required
 def exercises(request):
@@ -187,6 +193,9 @@ def history(request, exercise_id):
 def journal(request, year, month):
 	return render(request, "logger/journal.html")
 
+# API view to populate the journal page
+
+
 # @method_decorator(login_required, name='dispatch')
 # class LogMonthArchiveView(MonthArchiveView):
 	
@@ -215,6 +224,13 @@ def day(request, day, month, year):
 		# "date": date
 	})
 
+# API view to populate day page
+# @login_required
+# def day_contents(request, day, month, year):
+# 	logs = Log.objects.filter(user=request.user).order_by('-date', '-time').all()
+# 	return JsonResponse([log.serialize() for log in logs], safe=False)
+
+
 # class LogDayArchiveView(DayArchiveView):
 # 	queryset = Log.objects.all()
 # 	date_field = "date"
@@ -237,5 +253,55 @@ def routines(request):
 @login_required
 # Take some integers as input and return a url for the corresponding date
 def calendar_day(request, day, month, year):
+# def calendar_day(request):
 	url = reverse('day', args=(year, month, day))
 	return JsonResponse({"url": url}, status=201,)
+
+
+
+@login_required
+# Take some integers as input and return a url for the corresponding date
+def day_buttons(request, day1, month1, year1, day, month, year):
+	url = reverse('day', args=(year1, month1, day1))
+	date_string = f"{day1} {month1} {year1}"
+	date_object = datetime.strptime(date_string, "%d %m %Y").date()
+	log_list = Log.objects.filter(date=date_object, user=request.user).all()
+	logs = {}
+	for log in log_list:
+		set_list = (log.set_set.all())
+		log_info = {}
+		sets_perlog = []
+		for set in set_list:
+			set_serialized = set.serialize()
+			sets_perlog.append(set_serialized)
+		# sets.append(sets_perlog)
+		log_serialized = log.serialize()
+		# logs.append(logs_serialized)
+		log_info['sets_perlog'] = sets_perlog
+		log_info['log_info'] = log_serialized
+		logs[f"log: {log.id}"] = log_info
+	print(logs)
+
+	return JsonResponse(logs, status=201, safe=False)
+
+@login_required
+def display_day(request, date_string):
+	date_object = datetime.strptime(date_string, "%d %m %Y").date()
+	log_list = Log.objects.filter(date=date_object, user=request.user).all()
+	if log_list == None:
+		return JsonResponse({"Warning": "No Logs"})
+	logs = {}
+	for log in log_list:
+		set_list = (log.set_set.all())
+		log_info = {}
+		sets_perlog = []
+		for set in set_list:
+			set_serialized = set.serialize()
+			sets_perlog.append(set_serialized)
+		log_serialized = log.serialize()
+		log_info['sets_perlog'] = sets_perlog
+		log_info['log_info'] = log_serialized
+		logs[f"log: {log.id}"] = log_info
+	print(date_object)
+		
+	return JsonResponse(logs, safe=False, status=201)

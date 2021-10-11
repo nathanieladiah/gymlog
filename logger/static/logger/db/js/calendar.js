@@ -2,7 +2,6 @@ const date = new Date();
 
 document.addEventListener('DOMContentLoaded', () => {
 	renderCalendar();
-	// addDateLinks();
 
 	document.querySelector('.prev').addEventListener('click', () => {
 		date.setMonth(date.getMonth() - 1)
@@ -18,21 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const renderCalendar = () => {
 	date.setDate(1);
-	// console.log(date.getDay()) // Gives the index number of the day of the week for the date.
+
+	const dayDetails = document.querySelector('#day-container');
 
 	const monthDays = document.querySelector('.days');
 
 	// gets the last day of the current month
 	const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-	// console.log(lastDay)
 
 	// gets the last day of the previous month
 	const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
-	// console.log(prevLastDay);
 
 	const firstDayIndex = date.getDay();
 	const lastDayIndex = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
-	// console.log(lastDayIndex);
 
 	const nextDays = 7 - lastDayIndex - 1;
 
@@ -51,15 +48,9 @@ const renderCalendar = () => {
 		"December"
 	]
 
-	// const month = date.getMonth(); // returns index number of current month (starts at 0)
-	// console.log(month);
-	// console.log(date);
 
 	const year = date.getFullYear();
 	document.querySelector('.date').innerHTML = months[date.getMonth()] +" " + year; 
-	// console.log(date, year)
-
-	// document.querySelector('.today-date').innerHTML = new Date().toDateString();
 
 	let days = "";
 
@@ -80,46 +71,140 @@ const renderCalendar = () => {
 		days += `<div class="next-date day">${j}</div>`
 		monthDays.innerHTML = days;
 	}
+		
+	dayDetails.style.display = 'none';
 
-	// TODO write an ajax function to add links to the calendar days
-	// or put event handlers for clicking on the days to load the correct url, still an ajax request to get the
-	// url with reverse
-	 addDateLinks(year, date.getMonth() + 1);
+	// Event handler for clicking the days on the calendar to go to specific date page
+	dateClicker(year, date.getMonth() + 1);
+
 }
 
-const addDateLinks = (year, current_month) => {
-	// fetch(`calendar_day/${year}/${month}/${day}`)
-	// console.log(year, month);
+
+const dateClicker = (year, current_month) => {
 	document.querySelectorAll('.day').forEach(date => {
-		// TODO check if next-date or prev-date in classList and update month either +1 or -1
-		month = current_month;
+		
 		date.onclick = () => {
+			// Change the month depending on which date is clicked
+			if (date.classList.contains('prev-date')) {
+				var month = current_month - 1;
+			} else if (date.classList.contains('next-date')) {
+				var month = current_month + 1;
+			} else {
+				var month = current_month;
+			}
 			let day = date.innerHTML;
-			fetch(`calendar_day/${year}/${month}/${day}`)
-			.then(response => response.json())
-			.then(result => {
-				window.location = result.url;
-			})
+
+			dayStr = day.toString().padStart(2, '0');
+			monthStr = month.toString().padStart(2, '0');
+
+			logContent(dayStr, monthStr, year);
+
 		}
 	})
 }
 
+const logContent = (day, month, year) => {
+
+	document.querySelector('#calendar-container').style.display = 'none';
+	document.querySelector('#day-container').style.display = 'block';
+
+	
+
+	// TODO format date
+	const dateHeading = document.querySelector('#date-header');
+	dateHeading.innerHTML = `${day} ${month} ${year}`;
+	dateHeading.dataset.day = day;
+	dateHeading.dataset.month = month;
+	dateHeading.dataset.year = year;
+
+	// Get the corresponding logs and sets from the database for this day
+	fetch(`day/${day} ${month} ${year}`)
+		.then(response => response.json())
+		.then(exerciseLogs => {
+			console.log(exerciseLogs);
+			const logWrapper = document.querySelector('.log-wrapper');
+			logWrapper.innerHTML = "";
+
+			const journalPage = document.querySelector('#content');			
+			journalPage.innerHTML = "";
+
+			// use this since it isn't an array:
+			// each exercise log is an array with 0 being the key (log id) and 1 being the dict with sets and log info
+			Object.entries(exerciseLogs).forEach(exerciseLog => {
+				console.log(exerciseLog);
+
+				// create a div for each exercise log
+				const logObject = document.createElement('div');
+				logObject.classList.add('log', 'mb-30', 'p-2');
+				logObject.id = `log-${exerciseLog[1].log_info.id}`;
+
+				// create elements for what goes inside the logs
+				const exerciseName = document.createElement('h3');
+				exerciseName.classList.add('mb-2');
+				exerciseName.innerHTML = exerciseLog[1].log_info.exercise;
+				logObject.appendChild(exerciseName);
+
+				const setList = document.createElement('ul');
+				logObject.appendChild(setList);
+
+				// Need to iterate over exerciseLog.sets_perLog and create list items for each set
+				exerciseLog[1].sets_perlog.forEach(set => {
+					const setItem = document.createElement('li');
+					setItem.innerHTML = `${set.reps} reps @ ${set.weight}${set.units}`;
+					setList.appendChild(setItem);
+				})
+
+				// append the log Object
+				logWrapper.append(logObject);
+
+				// create a <strong> inside a <p> for the notes times and a <p> for the note and then a <br>
+				// TODO format the time 
+				if (exerciseLog[1].log_info.notes != "") {
+
+					const noteTime = document.createElement('p');
+					const noteTimeEmphasis = document.createElement('strong');
+					noteTimeEmphasis.innerHTML = `${exerciseLog[1].log_info.time} - ${exerciseLog[1].log_info.exercise}`;
+					noteTime.appendChild(noteTimeEmphasis);
+					journalPage.append(noteTime);
+
+					const noteBody = document.createElement('p');
+					noteBody.innerHTML = exerciseLog[1].log_info.notes;
+					journalPage.append(noteBody);
+
+					const noteSpace = document.createElement('br');
+					journalPage.append(noteSpace);
+				}
+
+			})
+
+		})
+
+}
 
 
-// document.querySelector('.prev').addEventListener('click', () => {
-// 	date.setMonth(date.getMonth() - 1)
-// 	renderCalendar()
-// })
+document.querySelectorAll('.day-seek').forEach(button => {
+		
+	const dateHeading = document.querySelector('#date-header');
 
-// document.querySelector('.next').addEventListener('click', () => {
-// 	date.setMonth(date.getMonth() + 1)
-// 	renderCalendar()
-// })
+	// TODO write case statement here to decide if to change month and year
+	button.onclick = () => {
+		if (button.id == 'prev') {
+			var day = Number(dateHeading.dataset.day) - 1;			
+		} else {
+			var day = Number(dateHeading.dataset.day) + 1;			
+		}
+		let month = dateHeading.dataset.month;
+		year = dateHeading.dataset.year;
 
-// document.querySelector('.current-month').addEventListener('click', () => {
-// 	date.setMonth(date.getMonth())
-// 	// console.log(date);
-// 	renderCalendar()
-// })
+		let dayStr = day.toString().padStart(2, '0');
+		let monthStr = month.toString().padStart(2, '0');
 
-// renderCalendar()
+		logContent(dayStr, monthStr, year);
+
+	}
+})
+
+document.querySelector('#calendar').addEventListener('click', () => {
+	document.querySelector('#day-container').style.display = 'none';
+	document.querySelector('#calendar-container').style.display = 'block';
+})
