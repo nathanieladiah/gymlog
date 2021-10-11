@@ -28,9 +28,7 @@ const renderPage = (month, year) => {
 	fetch(`journal/${month}/${year}`)
 	.then(response => response.json())
 	.then(notes => {
-		// console.log(notes);
 		const notesGroupedByDate = groupBy(notes, 'date');
-		// console.log(notesGroupedByDate);
 		const journalPage = document.querySelector('#content');
 		journalPage.innerHTML = "";
 
@@ -38,25 +36,34 @@ const renderPage = (month, year) => {
 		headingDate.innerHTML = `${month}, ${year}`;
 
 		Object.entries(notesGroupedByDate).forEach(dateGroup => {
-			console.log(dateGroup);
 			// dateGroup[0] is the date
 			// dateGroup[1] is an array of all the notes
+			const logWrapper = document.createElement('div')
+
 			const date = document.createElement('p');
 			const dateTitle = document.createElement('strong');
 			dateTitle.innerHTML = dateGroup[0];
 			date.appendChild(dateTitle)
-			journalPage.append(date);
+			logWrapper.append(date);
+
+			var noteCount = 0;
 
 			// iterate over the list of notes for each date
 			dateGroup[1].forEach(note => {
 				if (note.notes != "") {
+					noteCount += 1;
 					const noteObject = document.createElement('p');
 					noteObject.innerHTML = `${note.exercise} - ${note.notes}`
-					journalPage.append(noteObject);
+					logWrapper.append(noteObject);
 					const noteSpace = document.createElement('br');
-					journalPage.append(noteSpace);
+					logWrapper.append(noteSpace);
 				}
 			})
+
+			// Only display dates that have notes with content
+			if (noteCount != 0) {
+				journalPage.append(logWrapper);
+			}
 
 		})
 	})
