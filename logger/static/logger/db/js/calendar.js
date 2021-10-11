@@ -183,24 +183,98 @@ const logContent = (day, month, year) => {
 }
 
 
+// Event handler for next and previous day buttons on day page
 document.querySelectorAll('.day-seek').forEach(button => {
 		
 	const dateHeading = document.querySelector('#date-header');
 
-	// TODO write case statement here to decide if to change month and year
 	button.onclick = () => {
+		var month = Number(dateHeading.dataset.month);
+		var year = Number(dateHeading.dataset.year);
+		var day = Number(dateHeading.dataset.day);
+
+		// Case statements here to decide if to change month and year
 		if (button.id == 'prev') {
-			var day = Number(dateHeading.dataset.day) - 1;			
+			// var day = Number(dateHeading.dataset.day) - 1;			
+			if (day === 1){
+				month -= 1;
+				switch (month) {
+					case 0:
+						day = 31;
+						month = 12;
+						year -= 1;
+						break;
+					case 4:
+					case 6:
+					case 9:
+					case 11:
+						day = 30;
+						break;
+					case 2:
+						if (year % 4 === 0) {
+							day = 29;
+						} else {
+							day = 28;
+						}
+						break;
+					default:
+						day = 31;
+
+				}
+			} else {
+				day -= 1;
+			}
+
 		} else {
-			var day = Number(dateHeading.dataset.day) + 1;			
+			// var day = Number(dateHeading.dataset.day) + 1;			
+			switch (month) {
+				case 4:
+				case 6:
+				case 9:
+				case 11:
+					if (day === 30) {
+						day = 1;
+						month += 1;
+					} else {
+						day += 1;
+					}
+					break;
+				case 12:
+					if (day === 31) {
+						day = 1;
+						month = 1;
+						year += 1;
+					} else {
+						day += 1;
+					}
+					break;
+				case 2:
+					if (day === 28 && year % 4 != 0) {
+						day = 1;
+						month += 1;
+					} else if (day === 29) { 
+						day = 1;
+						month += 1;
+					} else {
+						day += 1;
+					}
+					break;
+				default:
+					if (day === 31) {
+						day = 1;
+						month += 1;
+					} else {
+						day += 1;
+					}
+			}
 		}
-		let month = dateHeading.dataset.month;
-		year = dateHeading.dataset.year;
+		
 
 		let dayStr = day.toString().padStart(2, '0');
 		let monthStr = month.toString().padStart(2, '0');
+		let yearStr = year.toString().padStart(4, '0');
 
-		logContent(dayStr, monthStr, year);
+		logContent(dayStr, monthStr, yearStr);
 
 	}
 })

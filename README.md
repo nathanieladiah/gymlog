@@ -274,3 +274,13 @@ will probably rename this view to calendar or something.
 
 **Tackle journal now**
 completed
+
+### October 11th 2021
+
+**Outstanding**:  
+[ ] Still need to put an edit option for new sets  
+[ ] Don't let exercises save if there are no sets
+[ ] Maybe an edit for history of exercises  
+[ ] The graph function for exercises hasn't been started yet  
+[x] Need to check dates when using previous and next buttons in journal and day views  
+[ ] Routine section hasn't been started yet  

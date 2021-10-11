@@ -46,13 +46,13 @@ function getCookie(name) {
     return cookieValue;
 }
 
-// TODO Need a way to stop adding empty sets
 function add_set() {
 	let reps = document.querySelector('#reps').value;
 	let weight = document.querySelector('#weight').value;
 	let units = document.querySelector('#units').value;
 	// console.log(weight, reps, units);
 
+	// check if the set has info in it before adding
 	if (reps.length > 0 && weight.length > 0 && units.length > 0) {
 
 		setCount += 1;

@@ -80,14 +80,27 @@ document.querySelectorAll('.month-seek').forEach(button => {
 		
 	const dateHeading = document.querySelector('#journal-head');
 
-	// TODO write case statement here to decide if to change year
+	// Statement here to decide if to change year
 	button.onclick = () => {
+		let year = Number(dateHeading.dataset.year);
+		var month = Number(dateHeading.dataset.month);
+		
 		if (button.id == 'prev') {
-			var month = Number(dateHeading.dataset.month) - 1;
+			if (month === 1) {
+				month = 12;
+				year -= 1;
+			} else {
+				month -= 1;
+			}
 		} else {
-			var month = Number(dateHeading.dataset.month) + 1;
+			if (month === 12) {
+				month = 1;
+				year += 1;
+			} else {
+				month += 1;
+			}
 		}
-		let year = dateHeading.dataset.year;
+		
 
 		let monthStr = month.toString().padStart(2, '0');
 
