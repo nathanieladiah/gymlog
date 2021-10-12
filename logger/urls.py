@@ -14,10 +14,12 @@ urlpatterns = [
 	path("settngs", views.settings, name="settings"),
 	path("routines", views.routines, name="routines"),
 	
+	# TODO: start url with name of exercise instead of 'exercise'
 	# Exercise list / history / views
 	path("exercises", views.exercises, name="exercises"),
 	path("new_exercise", views.new_exercise, name="new_exercise"),
 	path("exercise/<int:exercise_id>", views.exercise, name="exercise"),
+	path("exercise/<int:exercise_id>/graph", views.graph, name="graph"),
 	path("exercise/<int:exercise_id>/history", views.history, name="history"),
 
 	# API views

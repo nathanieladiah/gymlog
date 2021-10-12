@@ -1,0 +1,83 @@
+{% extends 'logger/dblayout.html' %}
+
+{% load static %}
+
+{% block title %}{{ exercise.name }}{% endblock %}
+
+{% block css %}<link href="{% static 'logger/db/css/graph.css' %}" rel="stylesheet">{% endblock %}
+
+{% block body %}
+	<section class="exercise-list">
+		<div class="container-fluid">
+			<!-- ======== title wrapper start ========= -->
+			<div class="title-wrapper pt-30">
+				<div class="row align-items-center">
+					<div class="col-md-6">
+						<div class="title mb-30">
+							<h2>{{ exercise.name }}</h2>
+						</div>
+					</div>
+					<!-- end col -->
+					<div class="col-md-6">
+						<div class="nav-wrapper mb-30">
+							<nav>
+								<ul class="nav exercise-nav">
+									<li class="nav-item">
+										<a class="nav-link" href="{% url 'exercise' exercise.id %}">New</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="{% url 'history' exercise.id %}">History</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link active" href="#">Graph</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+					<!-- end col -->
+				</div>
+				<!-- end row -->
+			</div>
+			<!-- ======== title wrapper end ========== -->
+
+			<!-- ======== graph wrapper start ======== -->
+			<div class="graph-wrapper">
+				<div class="row">
+					<div class="col-lg-7">
+						<div class="card-style mb-30">
+							<div class="title d-flex flex-wrap justify-content-between">
+								<div class="left">
+									<h6 class="text-medium mb-10">Some heading</h6>
+									<h3 class="text-bold">Some other heading</h3>
+								</div>
+								<div class="right">
+									<div class="select-style-1">
+										<div class="select-position select-sm">
+											<select class="light-bg">
+												<option value="">option1</option>
+												<option value="">option2</option>
+											</select>
+										</div>
+									</div>
+									<!-- end select -->
+								</div>
+							</div>
+							<!-- end chart title -->
+							<div class="chart">
+								<canvas id="Chart1" style="width: 100%;"></canvas>
+							</div>
+							<!-- end chart -->
+						</div>
+					</div>
+					<!-- end col -->
+				</div>
+				<!-- end row -->
+			</div>
+			<!-- ======== graph wrapper end ========== -->
+		</div>
+		<!-- end coniner -->
+	</section>
+	<script src="{% static 'logger/db/js/graph.js' %}"></script>
+
+{% endblock %}

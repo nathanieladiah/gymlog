@@ -123,6 +123,15 @@ def exercise(request, exercise_id):
 	})
 
 
+# Graph page for specific exercise
+@login_required
+def graph(request, exercise_id):
+	exercise = Exercise.objects.get(pk=exercise_id)
+	return render(request, "logger/graph.html", {
+		"exercise": exercise
+	})
+
+
 # Save sets for a specific exercise
 @login_required
 def add_log(request, exercise_id):
@@ -167,7 +176,7 @@ def add_log(request, exercise_id):
 	
 	url = reverse('exercises')
 
-	return JsonResponse({"message": "Success", "url": url}, status=201,)
+	return JsonResponse({"url": url}, status=201,)
 
 @login_required
 def history(request, exercise_id):

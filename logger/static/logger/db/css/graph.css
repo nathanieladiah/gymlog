@@ -1,0 +1,13 @@
+.exercise-nav .nav-link {
+	color: black;
+	margin: 0 2px;
+}
+
+.exercise-nav .nav-link:hover {
+	border-bottom: 3px solid rgba(0, 0, 0, 0.25);
+	color: rgba(0, 0, 0, 0.25);
+}
+
+.exercise-nav .active {
+	border-bottom: 3px solid black;
+}

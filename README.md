@@ -284,3 +284,12 @@ completed
 [ ] The graph function for exercises hasn't been started yet  
 [x] Need to check dates when using previous and next buttons in journal and day views  
 [ ] Routine section hasn't been started yet  
+
+** Routinek
+
+
+### October 12th 2021
+
+**Graphs**
+
+Figuring out how chart.js works

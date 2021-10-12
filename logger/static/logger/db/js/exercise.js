@@ -171,13 +171,10 @@ function save_log(date, time, notes, sets) {
 		})	
 		.then(response => response.json())
 		.then(result => {
-			console.log(result);
 			if (result.error) {
 				alert(result.error);
 				return;
 			} else {
-				alert(result.message);
-				// TODO have a function to go back to exercises
 				window.location = result.url;
 			}
 		});
