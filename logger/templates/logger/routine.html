@@ -1,0 +1,75 @@
+{% extends 'logger/dblayout.html' %}
+
+{% load static %}
+
+{% block title %}{{ routine.name }}{% endblock %}
+
+{% block css %}<link href="{% static 'logger/db/css/routines.css' %}" rel="stylesheet">{% endblock %}
+
+{% block body %}
+	<section class="routine-list">
+		<div class="container-fluid">
+			<!-- ======== title wrapper start ========= -->
+			<div class="title-wrapper pt-30">
+				<div class="row align-items-center">
+					<div class="col-md-6">
+						<div class="title mb-30">
+							<h2>{{ routine.name }}</h2>
+						</div>
+					</div>
+					<!-- end col -->
+				</div>
+				<!-- end row -->
+			</div>
+			<!-- ======== title wrapper end ========== -->
+
+			<!-- ======= routine exercise list start ======= -->
+			<div class="routine-list-wrapper">
+				{% for exercise in exercises %}
+					<div class="p-3 border-bottom routine-name">
+						<a class="text-dark routine-link" href="{% url 'exercise' exercise.id %}">{{ exercise.name }}</a>
+					</div>
+				{% endfor %}
+			</div>
+			<!-- ======= routine exercise list end ========= -->
+
+			{% if routine.category == 'user' %}
+				<!-- ======== add exercise button start ======== -->
+				<div class="row mt-4">
+					<button type="button" class="btn col-1 offset-11" data-bs-toggle="modal" data-bs-target="#AddExercise">
+						<i class="fa-solid fa-circle-plus add-button"></i>Add Exercise
+					</button>
+				</div>
+				<!-- ======== add exercise button end ======== -->
+			{% endif %}
+
+			<!-- ======== add routine exercises modal start ========== -->
+			<div class="modal fade" id="AddExercise" tabindex="-1" aria-labelledby="AddExerciseModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="AddExerciseModalLabel">Add Exercise</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+						</div>
+						<div class="modal-body">
+							<!-- Add routine form -->
+							<form id="add_exercise_form" method="POST" action="{% url 'add_routine_exercise' routine.id %}">
+								{% csrf_token %}
+								<div class="row">
+									{% for exercise in unregistered_exercises %}
+										<button class="btn btn-outline-secondary mb-3" type="submit" name="exercise" value="{{ exercise.id }}">{{ exercise.name }}</button>
+									{% endfor %}
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ======== modal end ============ -->
+		</div>
+		<!-- end container -->
+	</section>
+{% endblock %}

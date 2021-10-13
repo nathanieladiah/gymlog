@@ -11,7 +11,7 @@ from django.db.models import Count
 from django.utils.decorators import method_decorator
 
 
-from .models import Log, User, Exercise, Set
+from .models import Log, Muscle, Routine, User, Exercise, Set
 from django.db import IntegrityError
 # Create your views here.
 
@@ -19,6 +19,11 @@ METHODS = (
 	("car", "Cardio"),
 	("wgt", "Strength Training")
 )
+
+ROUTINE_TYPES = (
+		("wl", "Weight-Loss"),
+		("bb", "Bodybuilding")
+	)
 
 def index(request):
 	if request.user.is_authenticated:
@@ -90,24 +95,42 @@ def dashboard(request):
 def exercises(request):
 
 	user = request.user
-	# Get the exercises that the user has created.
-	exercises = Exercise.objects.filter(user=user).order_by('name').all()
+	# Get the exercises that the user has created or added.
+	# exercises = Exercise.objects.filter(user=user).order_by('name').all()
+	exercises = Exercise.objects.filter(users=user).order_by('name').all()
+	pre_exercises = Exercise.objects.filter(category="server").exclude(users=user).order_by('name').all()
+	muscles = Muscle.objects.order_by('name').all()
 
 	return render(request, "logger/exercises.html", {
 		"exercises": exercises,
-		"methods": METHODS
+		"methods": METHODS,
+		"pre_exercises": pre_exercises,
+		"muscles": muscles
 	})
 
+# This view adds a new custom exercise to database
 @login_required
 def new_exercise(request):
 	if request.method == "POST":
 		user = request.user
 		name = request.POST['name']
 		method = request.POST['method']
-		exercise = Exercise(name=name, user=user, method=method)
+		muscle_id = request.POST['muscle']
+		muscle = Muscle.objects.get(pk=muscle_id)
+		exercise = Exercise(name=name, method=method, category='user', muscle=muscle)
 		exercise.save()
+		exercise.users.add(user)
 		return HttpResponseRedirect(reverse("exercises"))
 
+# Add premade exercise to users list
+@login_required
+def pre_exercise(request):
+	if request.method == "POST":
+		user = request.user
+		exercise_id = request.POST['exercise']
+		exercise = Exercise.objects.get(pk=exercise_id)
+		exercise.users.add(user)
+		return HttpResponseRedirect(reverse("exercises"))
 
 # Load page for a specific exercise
 @login_required
@@ -181,7 +204,7 @@ def add_log(request, exercise_id):
 @login_required
 def history(request, exercise_id):
 	exercise = Exercise.objects.get(pk=exercise_id)
-	logs = Log.objects.filter(exercise=exercise).order_by('-date', '-time').all()
+	logs = Log.objects.filter(exercise=exercise, user=request.user).order_by('-date', '-time').all()
 	sets = []
 	for log in logs:
 		log_sets = log.set_set.all()
@@ -198,9 +221,10 @@ def journal(request):
 	return render(request, "logger/journal.html")
 
 
-@login_required
-def settings(request):
-	return render(request, "logger/settings.html")
+# Disabled this view in first version of the app
+# @login_required
+# def settings(request):
+# 	return render(request, "logger/settings.html")
 
 
 @login_required
@@ -226,9 +250,9 @@ def display_day(request, date_string):
 	return JsonResponse(logs, safe=False, status=201)
 
 
-@login_required
-def routines(request):
-	return render(request, "logger/routines.html")
+# @login_required
+# def routines(request):
+# 	return render(request, "logger/routines.html")
 
 
 @login_required
@@ -237,3 +261,64 @@ def get_journal(request, month, year):
 	# date_object = datetime.strptime().date()
 	logs = Log.objects.filter(user=request.user, date__year=year, date__month=month).all()
 	return JsonResponse([log.serialize() for log in logs], safe=False, status=201)
+
+
+@login_required
+def routines(request):
+
+	user = request.user
+	routines = Routine.objects.filter(users=user).order_by('name').all()
+	pre_routines = Routine.objects.filter(category="server").exclude(users=user).order_by('name').all()
+
+	return render(request, "logger/routines.html", {
+		"routines": routines,
+		"routine_types": ROUTINE_TYPES,
+		"pre_routines": pre_routines
+	})
+
+# This view adds a new custom routine to database
+@login_required
+def new_routine(request):
+	if request.method == "POST":
+		user = request.user
+		name = request.POST['name']
+		routine_type = request.POST['routine_type']
+		description = request.POST['description']
+		routine = Routine(name=name, category='user', type=routine_type, description=description)
+		routine.save()
+		routine.users.add(user)
+		return HttpResponseRedirect(reverse("routines"))
+
+# Add premade routine to users list
+@login_required
+def add_routine(request):
+	if request.method == "POST":
+		user = request.user
+		routine_id= request.POST['routine']
+		routine = Routine.objects.get(pk=routine_id)
+		routine.users.add(user)
+		return HttpResponseRedirect(reverse("routines"))
+
+
+# view specific routine
+@login_required
+def routine(request, routine_id):
+	user = request.user
+	routine = Routine.objects.get(pk=routine_id)
+	exercises = Exercise.objects.filter(routine = routine)
+	unregistered_exercises = Exercise.objects.filter(users=user).exclude(routine=routine).all()
+	print(unregistered_exercises)
+	return render(request, "logger/routine.html", {
+		"routine": routine,
+		"exercises": exercises,
+		"unregistered_exercises": unregistered_exercises
+	})
+
+login_required
+def add_routine_exercise(request, routine_id):
+	routine = Routine.objects.get(pk=routine_id)
+	if routine.category == 'user':
+		exercise_id = request.POST['exercise']
+		exercise = Exercise.objects.get(pk=exercise_id)
+		routine.exercises.add(exercise)
+		return HttpResponseRedirect(reverse("routine", args=(routine_id, )))

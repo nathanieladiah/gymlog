@@ -15,8 +15,8 @@
 
 The app is used to track fitness progress, especially in terms of weights lifted and body measurements.
 
-* Users will be able to create an account.
-	* Use email and password to create account.
+* Users will be able to create an account. **Done**
+	* Use email and password to create account. **Done**
 * Users will be able to set a username and profile photo.
 * The app will allow the user to create workout routines
 	* Using existing exercises or creating new exercises
@@ -25,17 +25,17 @@ The app is used to track fitness progress, especially in terms of weights lifted
 * Users will be able to schedule exercises
 	* Calendar
 * Users will be able to enter details from workouts
-	* Fluid data entry 
-	* This includes weights and reps for each exercise
+	* Fluid data entry  **Done**
+	* This includes weights and reps for each exercise **Done**
 	* Specify intensity and rest time per exercise
-	* A place for user to save notes about the feeling during the workout
+	* A place for user to save notes about the feeling during the workout **Done** 
 	* Plate calculator
 	* Automatically back up data
 	* Cardio workout logging
 * Users will be able to view a log of workouts
-	* Keep track of personal bests
+	* Keep track of personal bests **Done**
 	* Perhaps a graph for specific exercises
-	* A journal/diary type document with notes 
+	* A journal/diary type document with notes **Done**
 	* Allow import and export of data
 * Users will be able to store body measurements such as height, weight, as well as different body part measurements.
 
@@ -293,3 +293,80 @@ completed
 **Graphs**
 
 Figuring out how chart.js works
+
+**Deciding on equations for graphs**
+
+**total sets**  
+The toal number of sets within a selected time period. Can show how many different exercises you do per bodypart and the sets you devote to them.
+
+**Total reps** = the total number of reps within selected time period.
+**total body reps** shows the total reps per body part
+
+**reps/set** number of reps / number of sets in selected time period.
+
+**The above 3 don't signify getting stronger, just the composition of the sets**
+
+**Cumulative weight** = The sum of the (# reps x weight) of all the sets within a time period.
+* an increase in this number means that you are working more by lifting more total weight. 
+* this is a good metric to gauge increase in strength if set composition (#reps/set) remains fixed.
+
+
+**Average Total set weight** = (Cumulative weight of all sets)/ # sets
+* an increase in this number can signify an increase in strength
+* wihin a set composition, the weight you lift is increasing.
+
+**Number average rep weight** = (Cumulative weight of all sets)/# reps  
+**weight average rep weight** = (cumulative rep x weight x weight)/ cumulative weight
+* bot averages tend to increase as you increase the weight of set assuming relatively constant composition.
+
+ **Strength Factor** = (number or weight average rep weight)/(#reps/#sets)
+ * decrease as total reps increase.
+ * increase if (#reps/#sets is constant) but more weight is added across sets
+
+ **Exercise Factor** = (weight avg weight rep)/(number average rep weight)
+ * indicates how 'spread apart' your set is
+
+ **Max Weight - 1rep** only look for max weight of 1 rep 
+ **max weight -1rep+** max set weigh for th elowest number of reps
+
+
+ **reps per weight histogram** weights vs # of reps for those weights
+
+
+**Routine**
+
+create a table where routine holds exercises - many to many (exercises to routines)
+also allow exercises to be many to many with users
+when a user creates an exercise, first check if it exists (check exercise name), if it doesn't create it; if it does add user to users
+routines can be many to many with users as well.
+
+### October 13th 2021
+
+## Update on incomplete goals
+
+* Users will be able to set a username and profile photo.
+* The app will allow the user to create workout routines
+	* Using existing exercises or creating new exercises **Done**
+	* Large list of exercises, links to descriptions/ images
+	* Offer popular workout regimens as ready-made routines
+* Users will be able to schedule exercises
+	* Calendar
+* Users will be able to enter details from workouts
+	* Specify intensity and rest time per exercise
+	* Plate calculator
+	* Automatically back up data
+	* Cardio workout logging
+* Users will be able to view a log of workouts
+	* Keep track of personal bests 
+	* Perhaps a graph for specific exercises
+	* Allow import and export of data
+* Users will be able to store body measurements such as height, weight, as well as different body part measurements.
+
+Added routine table, and updated exercise table. add way to add custom or premade routines and exercises.
+Add a method to add exercises to custom routines and that will be the mvp.
+**done**
+
+username and profile photo:
+skip in mvp
+finished for now.
+

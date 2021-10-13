@@ -34,13 +34,16 @@
 
 			<!-- ======== add exercise button start ======== -->
 			<div class="row mt-2">
-				<button type="button" class="btn col-1 offset-11 add-button" data-bs-toggle="modal" data-bs-target="#Addexercise">
-					<i class="fa-solid fa-circle-plus"></i>
+				<button type="button" class="btn col-1 offset-10" data-bs-toggle="modal" data-bs-target="#PreExercise">
+					<i class="fa-solid fa-circle-plus add-button"></i>Add Exercise
+				</button>
+				<button type="button" class="btn col-1" data-bs-toggle="modal" data-bs-target="#Addexercise">
+					<i class="fa-solid fa-circle-plus add-button"></i>Custom Exercise
 				</button>
 			</div>
 			<!-- ======== add exercise button end ======== -->
 
-			<!-- ======== modal start ========== -->
+			<!-- ======== add exercise modal start ========== -->
 			<div class="modal fade" id="Addexercise" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -64,12 +67,60 @@
 									</select>
 									<label for="floatingSelect">Exercise type:</label>
 								</div>
+								<div class="form-floating mb-3">
+									<select class="form-select" id="muscleSelect" name="muscle" aria-label="Select muscle">
+										{% for muscle in muscles %}
+											<option value="{{ muscle.id }}">{{ muscle.name }}</option>
+										{% endfor %}
+									</select>
+									<label for="muscleSelect">Muscle Group:</label>
+								</div>
 							</form>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 							<button type="submit" form="newexercise_form" class="btn btn-primary">Save exercise</button>
 						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ======== modal end ============ -->
+
+			<!-- ======== add prebuilt exercise modal start ========== -->
+			<div class="modal fade" id="PreExercise" tabindex="-1" aria-labelledby="CustomExerciseModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="CustomExerciseModalLabel">Add exercise</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+						</div>
+						<div class="modal-body">
+							<!-- Add exercise form -->
+							<form id="Preexercise_form" method="POST" action="{% url 'pre_exercise' %}">
+								{% csrf_token %}
+								<!-- <div class="form-floating mb-3">
+									<input class="form-control" id="exercise_name" type="text" name="name" autocomplete="off" placeholder="Name">
+									<label for="exercise_name">Name</label>
+								</div>
+								<div class="form-floating mb-3">
+									<select class="form-select" id="prefloatingSelect" name="method" aria-label="Floating label select example">
+										{% for method in methods %}
+											<option value="{{ method.0 }}">{{ method.1 }}</option>
+										{% endfor %}
+									</select>
+									<label for="prefloatingSelect">Exercise type:</label>
+								</div> -->
+								<div class="row">
+									{% for exercise in pre_exercises %}
+										<button class="btn btn-outline-secondary mb-3" type="submit" name="exercise" value="{{ exercise.id }}">{{ exercise.name }}</button>
+									{% endfor %}
+								</div>
+							</form>
+						</div>
+						<!-- <div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button type="submit" form="newexercise_form" class="btn btn-primary">Save exercise</button>
+						</div> -->
 					</div>
 				</div>
 			</div>

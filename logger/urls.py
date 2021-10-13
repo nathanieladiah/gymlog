@@ -11,13 +11,20 @@ urlpatterns = [
 	# utility views
 	path("dashboard", views.dashboard, name="dashboard"), # call this calendar maybe?
 	path("journal", views.journal, name="journal"),
-	path("settngs", views.settings, name="settings"),
+	# path("settngs", views.settings, name="settings"),
+
+	# Routine views
 	path("routines", views.routines, name="routines"),
+	path("add_routine", views.add_routine, name="add_routine"),
+	path("new_routine", views.new_routine, name="new_routine"),
+	path("routine/<int:routine_id>", views.routine, name="routine"),
+	path("add_routine_exercise/<int:routine_id>", views.add_routine_exercise, name="add_routine_exercise"),
 	
 	# TODO: start url with name of exercise instead of 'exercise'
 	# Exercise list / history / views
 	path("exercises", views.exercises, name="exercises"),
 	path("new_exercise", views.new_exercise, name="new_exercise"),
+	path("pre_exercise", views.pre_exercise, name="pre_exercise"),
 	path("exercise/<int:exercise_id>", views.exercise, name="exercise"),
 	path("exercise/<int:exercise_id>/graph", views.graph, name="graph"),
 	path("exercise/<int:exercise_id>/history", views.history, name="history"),

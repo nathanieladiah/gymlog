@@ -24,49 +24,59 @@
 			<!-- ======== title wrapper end ========== -->
 
 			<!-- ======== routine list wrapper start ====== -->
-			<!-- List each routine per user -->
-			{% for routine in routines %}
-				<div class="p-3 border-bottom routine-name">
-					<a class="text-dark routine-link" href="#">{{ routine.name }}</a>
+			<!-- List each exercise per user -->
+			<div id="routine-list-wrapper">
+				{% for routine in routines %}
+				<div id="routine-{{ routine.id }}-wrapper" class="routine-wrapper">
+					<div class="p-3 border-bottom routine-name row" id="routine-{{ routine.id }}">
+						<a class="text-dark routine-link col-lg-11" href="{% url 'routine' routine.id %}">{{ routine.name }}</a>
+						<button type="button" class="btn col-lg-1 show-desc align-self-start" data-description="{{ routine.description }}" data-routine="{{ routine.id }}">
+							<i class="fa-solid fa-chevron-down"></i>
+						</button>
+					</div>
 				</div>
-			{% endfor %}
-			<div class="p-3 border-bottom routine-name">
-				<a class="text-dark routine-link" href="#">Chest</a>
-			</div>
-			<div class="p-3 border-bottom routine-name">
-				<a class="text-dark routine-link" href="#">Legs</a>
-			</div>
-			<div class="p-3 border-bottom routine-name">
-				<a class="text-dark routine-link" href="#">Arms</a>
-			</div>
-			<div class="p-3 border-bottom routine-name">
-				<a class="text-dark routine-link" href="#">Back</a>
+				{% endfor %}
 			</div>
 			<!-- ======== routine list wrapper end ========= -->
 
-			<!-- ======== add exercise button start ======== -->
-			<div class="row mt-2">
-				<button type="button" class="btn col-1 offset-11 add-button" data-bs-toggle="modal" data-bs-target="#Addroutine">
-					<i class="fa-solid fa-circle-plus"></i>
+			<!-- ======== add routine button start ======== -->
+			<div class="row mt-4">
+				<button type="button" class="btn col-1 offset-10" data-bs-toggle="modal" data-bs-target="#Addroutine">
+					<i class="fa-solid fa-circle-plus add-button"></i>Add Routine
+				</button>
+				<button type="button" class="btn col-1" data-bs-toggle="modal" data-bs-target="#Customroutine">
+					<i class="fa-solid fa-circle-plus add-button"></i>Custom Routine
 				</button>
 			</div>
-			<!-- ======== add exercise button end ======== -->
+			<!-- ======== add routine button end ======== -->
 
-			<!-- ======== modal start ========== -->
-			<div class="modal fade" id="Addroutine" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+			<!-- ======== add custom routine modal start ========== -->
+			<div class="modal fade" id="Customroutine" tabindex="-1" aria-labelledby="CustomRoutineModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="ModalLabel">Add routine</h5>
+							<h5 class="modal-title" id="CustomRoutineModalLabel">Create Routine</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
 						</div>
 						<div class="modal-body">
 							<!-- Add exercise form -->
-							<form id="newroutine_form" method="POST" action="#">
+							<form id="newroutine_form" method="POST" action="{% url 'new_routine' %}">
 								{% csrf_token %}
 								<div class="form-floating mb-3">
 									<input class="form-control" id="routine_name" type="text" name="name" autocomplete="off" placeholder="Name">
 									<label for="routine_name">Name</label>
+								</div>
+								<div class="form-floating mb-3">
+									<select class="form-select" id="TypeSelect" name="routine_type" aria-label="Select routine type">
+										{% for type in routine_types %}
+											<option value="{{ type.0 }}">{{ type.1 }}</option>
+										{% endfor %}
+									</select>
+									<label for="TypeSelect">Routine type:</label>
+								</div>
+								<div class="form-floating mb-3">
+									<textarea class="form-control" id="description" name="description" placeholder="Routine Description..."></textarea>
+									<label for="description">Description</label>
 								</div>
 							</form>
 						</div>
@@ -78,7 +88,35 @@
 				</div>
 			</div>
 			<!-- ======== modal end ============ -->
+
+			<!-- ======== add prebuilt routine modal start ========== -->
+			<div class="modal fade" id="Addroutine" tabindex="-1" aria-labelledby="AddRoutineModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="AddRoutineModalLabel">Add Routine</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+						</div>
+						<div class="modal-body">
+							<!-- Add routine form -->
+							<form id="add_routine_form" method="POST" action="{% url 'add_routine' %}">
+								{% csrf_token %}
+								<div class="row">
+									{% for routine in pre_routines %}
+										<button class="btn btn-outline-secondary mb-3" type="submit" name="routine" value="{{ routine.id }}">{{ routine.name }}</button>
+									{% endfor %}
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ======== modal end ============ -->
 		</div>
 		<!-- end container -->
 	</section>
+	<script src="{% static 'logger/db/js/routines.js' %}"></script>
 {% endblock %}

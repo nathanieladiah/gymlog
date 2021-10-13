@@ -18,11 +18,18 @@ class Exercise(models.Model):
 		("wgt", "Strength Training")
 	)
 
+	CATEGORIES = (
+		("user", "Custom"),
+		("server", "Pre-made")
+	)
+
 	name = models.CharField(max_length=120)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	# user = models.ForeignKey(User, on_delete=models.CASCADE)
+	users = models.ManyToManyField(User, blank=True, null=True)
 	# make a table of all the muscles maybe make a many to many field
-	# muscle = models.ForeignKey(Muscle, max_length=120, blank=True, null=True)
+	muscle = models.ForeignKey('Muscle', blank=True, null=True, on_delete=models.CASCADE)
 	method = models.CharField(max_length=4, choices=METHODS, default="wgt")
+	category = models.CharField(max_length=7, choices=CATEGORIES, default="user")
 	# maybe have a list of equipments this exercise might need. maybe a many to many field for equipment
 	# equipment = models.ForeignKey
 	# category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
@@ -72,3 +79,32 @@ class Log(models.Model):
 			"notes": self.notes,
 			"username": self.user.username
 		}
+
+
+class Muscle(models.Model):
+	name = models.CharField(max_length=120)
+
+	def __str__(self):
+		return f"{self.name}"
+
+
+class Routine(models.Model):
+	ROUTINE_TYPES = (
+		("wl", "Weight-Loss"),
+		("bb", "Bodybuilding")
+	)
+
+	CATEGORIES = (
+		("user", "Custom"),
+		("server", "Pre-made")
+	)
+
+	name = models.CharField(max_length=300)
+	type = models.CharField(max_length=4, choices=ROUTINE_TYPES)
+	description = models.TextField(blank=True, null=True)
+	category = models.CharField(max_length=7, choices=CATEGORIES, default="user")
+	users = models.ManyToManyField(User, blank=True, null=True)
+	exercises = models.ManyToManyField(Exercise, blank=True, null=True)
+
+	def __str__(self):
+		return f"{self.name}: {self.type}"
