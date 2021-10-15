@@ -57,19 +57,21 @@
 .weekdays {
 	display: grid;
 	grid-template-columns: repeat(7, 1fr);
-	/* margin-bottom: 2%; */
+	margin-bottom: 2%;
 	border: 1px solid #d3d3d3;
 	border-bottom: none;
 	/* border-radius: 15px; */
 	padding: 20px;
 	/* background: white; */
 	background: #ffa07a;
-	font-size: 1.5rem;
+	font-size: 5vw;
 	font-weight: 600;
 }
 
-.weekdays div {
+.weekdays div { 
 	justify-self: center;
+	/* margin-left: -3vw;
+	margin-right: 5vw; */
 }
 
 .days {
@@ -108,4 +110,29 @@
 .today:hover {
 	border: .2rem solid #777;
 	cursor: pointer;
+}
+
+.weekdays {
+	width: 100%;
+	height: 5rem;
+	padding: 0 0.4rem;
+	display: flex;
+	align-items: center;
+}
+
+.weekdays div {
+	font-size: 1.5rem;
+	font-weight: 400;
+	letter-spacing: 0.1rem;
+	width: calc(100% / 7); /* difference between width and padding */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* text-shadow: 0 .3rem .5rem rgba(0,0,0,0.5); */
+}
+
+@media only screen and (max-width: 768px) {
+	.weekdays div {
+		font-size: 1rem;
+	}
 }
