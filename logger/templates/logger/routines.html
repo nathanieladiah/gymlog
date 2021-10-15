@@ -29,8 +29,8 @@
 				{% for routine in routines %}
 				<div id="routine-{{ routine.id }}-wrapper" class="routine-wrapper">
 					<div class="p-3 border-bottom routine-name row" id="routine-{{ routine.id }}">
-						<a class="text-dark routine-link col-lg-11" href="{% url 'routine' routine.id %}">{{ routine.name }}</a>
-						<button type="button" class="btn col-lg-1 show-desc align-self-start" data-description="{{ routine.description }}" data-routine="{{ routine.id }}">
+						<a class="text-dark routine-link col-8 col-lg-11" href="{% url 'routine' routine.id %}">{{ routine.name }}</a>
+						<button type="button" class="btn col-1 show-desc align-self-start" data-description="{{ routine.description }}" data-routine="{{ routine.id }}">
 							<i class="fa-solid fa-chevron-down"></i>
 						</button>
 					</div>
