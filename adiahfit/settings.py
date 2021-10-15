@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-okrz*+*nm$^v+0psn*t9%+7i)z@p*otgv679^6=yjejx@3c-t$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['fitness-tracker-logger.herokuapp.com']
 
 
 # Application definition
