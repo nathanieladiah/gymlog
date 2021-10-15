@@ -24,12 +24,12 @@ const showdesc = (routine_id, text) => {
 		description.classList.add('row', 'p-3', 'border-bottom', 'routine-desc')
 
 		const desctext = document.createElement('p');
-		desctext.classList.add('col-lg-11');
+		desctext.classList.add('col-10','col-lg-11');
 		desctext.innerHTML = text;
 		description.appendChild(desctext)
 
 		const hideButton = document.createElement('button');
-		hideButton.classList.add('btn', 'col-lg-1', 'hide-desc', 'align-self-start');
+		hideButton.classList.add('btn', 'col-1', 'hide-desc', 'align-self-start');
 		hideButton.setAttribute('type', 'button');
 		hideButton.dataset['id'] = description.id;
 
