@@ -57,31 +57,24 @@
 .weekdays {
 	display: grid;
 	grid-template-columns: repeat(7, 1fr);
-	margin-bottom: 2%;
 	border: 1px solid #d3d3d3;
 	border-bottom: none;
-	/* border-radius: 15px; */
 	padding: 20px;
-	/* background: white; */
 	background: #ffa07a;
 	font-size: 5vw;
 	font-weight: 600;
 }
 
-.weekdays div { 
+/* .weekdays div { 
 	justify-self: center;
-	/* margin-left: -3vw;
-	margin-right: 5vw; */
-}
+} */
 
 .days {
-	/* height: 100%; */
 	display: grid;
 	grid-template-columns: repeat(7, 1fr);
 	grid-template-rows: repeat(6, 90px);
 	background: white;
 	border: 1px solid #d3d3d3;
-	/* border-radius: 15px; */
 	margin-bottom: 3%;
 }
 
@@ -89,14 +82,38 @@
 	border: 1px solid rgba(211, 211, 211, 0.25);
 	text-align: right;
 	padding: 10px;
-	/* text-shadow: 0 .3rem .5rem rgba(0,0,0,0.5); */
-}
+} 
 
 .days div:hover:not(.today) {
 	background-color: #f3f3f3;
 	border: .2rem solid #777;
 	cursor: pointer;
 }
+
+/* .days {
+	width: 75vw;
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0.2rem;
+	align-items: center;
+}
+
+.days div {
+	font-size: 1.4rem;
+	margin: 0.3rem;
+	width: calc(100% / 7);
+	height: 5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-shadow: 0 .3rem .5rem rgba(0,0,0,0.5);
+}
+
+.days div:hover:not(.today) {
+	background-color: #262626;
+	border: .2rem solid #777;
+	cursor: pointer;
+} */
 
 .prev-date,
 .next-date {
@@ -128,11 +145,17 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background: #ffa07a;
+	padding: 20px;
 	/* text-shadow: 0 .3rem .5rem rgba(0,0,0,0.5); */
 }
 
 @media only screen and (max-width: 768px) {
 	.weekdays div {
 		font-size: 1rem;
+		letter-spacing: 0.05rem;
+		/* width: calc(100% / 7); */
+		width: 1fr;
+		padding: 20px 0;
 	}
 }
