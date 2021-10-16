@@ -15,6 +15,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'logger/landing/css/styles.css' %}" rel="stylesheet" />
+        <link href="{% static 'logger/landing/css/landing.css' %}" rel="stylesheet" />
 
 		<!-- Page specifif css -->
 		{% block css %}{% endblock %}
@@ -38,7 +39,7 @@
             <nav class="navbar navbar-expand-md navbar-light bg-light p-2">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{% url 'index' %}">
-                        <img src="{% static 'logger/db/images/logo/email.jpg' %}" alt="logo">
+                        <img src="{% static 'logger/landing/assets/img/logo.png' %}" class="img-fluid logo" alt="logo">
                     </a>
                     <ul class="navbar-nav mr-auto">
                         {% if user.is_authenticated %}
