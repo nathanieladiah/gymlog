@@ -49,6 +49,7 @@ I also think the project satisfies the distinctiveness requirement since none of
 ## Instructions
 
 * Go to https://fitness-tracker-logger.herokuapp.com/. (or localhost if running locally)
+	* 
 * Register a new account
 * This takes you to the dashboard page, which shows a calendar, where you can select days
 * On the sidenav, select exercises to add exercises to your list,
