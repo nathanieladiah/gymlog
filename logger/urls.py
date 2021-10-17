@@ -32,5 +32,6 @@ urlpatterns = [
 	# API views
 	path("exercise/<int:exercise_id>/add", views.add_log, name="add_log"), # API url
 	path("day/<date_string>", views.display_day, name="display_day"), # API url
-	path("journal/<month>/<year>", views.get_journal, name="load_journal")
+	path("journal/<month>/<year>", views.get_journal, name="load_journal"),
+	path("exercise/<id>/graph/<str:period>/<int:month>/<int:year>", views.graph_data, name="graph_data")
 ]

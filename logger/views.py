@@ -314,7 +314,7 @@ def routine(request, routine_id):
 		"unregistered_exercises": unregistered_exercises
 	})
 
-login_required
+@login_required
 def add_routine_exercise(request, routine_id):
 	routine = Routine.objects.get(pk=routine_id)
 	if routine.category == 'user':
@@ -322,3 +322,32 @@ def add_routine_exercise(request, routine_id):
 		exercise = Exercise.objects.get(pk=exercise_id)
 		routine.exercises.add(exercise)
 		return HttpResponseRedirect(reverse("routine", args=(routine_id, )))
+
+
+@login_required
+def graph_data(request, id, period, month, year):
+	if period == 'mth':
+		log_list = Log.objects.filter(date__year=year, date__month=month, user=request.user, exercise__id=id).order_by('date').all()
+		pass
+	elif period == 'yr':
+		log_list = Log.objects.filter(date__year=year, user=request.user, exercise__id=id).order_by('date').all()
+	elif period == 'at':
+		log_list = Log.objects.filter(user=request.user, exercise__id=id).order_by('date').all()
+	
+	# if log_list == None:
+	# 	return JsonResponse({"Warning": "No Logs"})
+	logs = {}
+	for log in log_list:
+		set_list = (log.set_set.all())
+		log_info = {}
+		sets_perlog = []
+		for set in set_list:
+			set_serialized = set.serialize()
+			sets_perlog.append(set_serialized)
+		log_serialized = log.serialize()
+		log_info['sets_perlog'] = sets_perlog
+		log_info['log_info'] = log_serialized
+		logs[f"log: {log.id}"] = log_info
+	# print(date_object)
+		
+	return JsonResponse(logs, safe=False, status=201)
