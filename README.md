@@ -1,13 +1,72 @@
 ## Distinctiveness and Complexity
 
+This project is a django web app that allows users to track their workouts. The application allows users to register and sign in to access a list of exercises that are unique to them. 
+There are models for users, exercises, exercise sets, exercise logs, and routines. There are several views that allow users to add custom or predefined exercises to their exercise list; add routines of exercises; view the history of each exercise; access a page for each day that displays the exercise logs and notes for that day.
+
+JavaScript is used to render the day views and journal views dynamically based on the user input.
+JavaScript is also used for the calendar as well as the graph that shows progess.
+
+I believe the project satisfies the complexity requirement since it has multiple models and views as well as multiple JavaScript functions for rendering the webpages.
+
+I also think the project satisfies the distinctiveness requirement since none of the other projects in the course were for keeping track of anything in the same way. This application has a calendar view that allows the user to select dates on it to go to corresponding logs. It also has a graphical representation of user data.
+
 
 ## File list
-
+* **Root**
+	* **images** contains images used in this README
+	* **staticfiles** created for the heroku deployment
+	* **Procfile** used to run the processes on the heroku server
+	* **Procfile.windows** used to run heroku locally on windows machines (gunicorn doesn't work)
+	* **Logger** - this is the app folder created by django
+		* **static/logger** - the static files for the app
+			* **db** - files for the dashboard (the main part of the app)
+				* **css** 
+					* bootstrap.min.css - bootstrap css 
+					* day.css - css styles for the day page
+					* exercise.css - styling for the page that lists users' exercises
+					* graph.css - styling for the graph page 
+					* journal.css - styling for the journal page of users' notes
+					* lineicons.css - icons for the template
+					* main.css - main css for dashboard template
+					* materialdesignicons.min.css - more icons
+					* routine.css - styling for the routines page
+				* **js** 
+					* bootstrap.bundle.min.js - bootstrap javascript functions
+					* calendar.js - functions that allow the calendar to be displayed and allows users to select dates
+					* chart.min.js - chart.js code
+					* date.js - dynamically shows log contents and notes for a specific date
+					* exercise.js - javascript functions that allow adding sets to new exercise logs
+					* graph.js - displays a graph of users volume load per day based on the option selected by user
+					* journal.js dynamically displays entries for a particular month based on current date or what user selects
+					* main.js - javascript functions for the template to work
+					* routine.js - functions to support the adding of routines and displaying of routines on the page
+			* **landing** - files for the  landing page of the web app
+		* **models.py** - the models for the django database
+		* **urls.py** - the url paths associatd with the logger app
+		* **views.py** - the python code that handles the backend
+		* **custom_context_processor.py** - allows a date variable to be accessible in all pages
 
 ## Instructions
 
+* Go to https://fitness-tracker-logger.herokuapp.com/. (or localhost if running locally)
+* Register a new account
+* This takes you to the dashboard page, which shows a calendar, where you can select days
+* On the sidenav, select exercises to add exercises to your list,
+* Once exercises are added you can click on them to be taken to the exercise page, which has a nav to new, history, and graph.
+	* new allows you to enter a new log which comprises the date, time, sets, and notes
+		* the sets include a number of weight, reps, and unit arrays.
+	* history shows all the logs you have created for that exercise in reverse chronological order
+	* graph shows the total volume load (sum of (weight * reps) for each set) per day for the period selected
+* On the sidenav, select journal to show a list of the notes you've made in chronological order per month
+	* navigation buttons on the top allow you to change the months
+* On the sidenav, select routines to create or add routines to your profile
+* Going back to the dashboard brings up the calendar, where you can click on a day to bring up the logs and notes for that particular day
+	* Using the navigation buttons on top you can go to previous and next days or back to the calendar.
 
 ## Additional info
+
+* A template for the dashboard was used - PlainAdmin  
+	The license is included
 
 
 
@@ -370,3 +429,8 @@ username and profile photo:
 skip in mvp
 finished for now.
 
+TODO: sort exercise list by muscles, with a dropdown list perhaps
+TODO: display a different new exercise page if cardio or strength
+TODO: add instructions/ description/ pictures to exercises
+TODO: when you add a routine, add all the exercises to user profile
+TODO: in the graphing section, need to convert units to kg
