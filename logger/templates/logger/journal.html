@@ -44,14 +44,6 @@
 			<div id="paper">
 				<div id="pattern">
 					<div id="content">
-						<!-- <p><strong>Monday 4th October 2021</strong></p>
-						<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat, assumenda ab voluptas, fugit natus tenetur voluptates accusantium et quam delectus, molestiae similique neque ipsam nulla itaque libero vitae aperiam quas!</p>
-						<br>
-						<p><strong>Friday 8th October 2021</strong></p>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error architecto praesentium reiciendis quas eveniet, voluptates voluptatem quae beatae optio porro fugit vero atque nisi sequi consectetur reprehenderit et assumenda rerum.</p>
-						<br>
-						<p><strong>Saturday 9th October 2021</strong></p>
-						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe necessitatibus ad quibusdam fugit dignissimos optio corrupti consectetur porro eius id odio tenetur consequatur recusandae alias, labore hic tempore doloremque cupiditate.</p> -->
 						{% for log in object_list %}
 								<p><strong>{{ log.date|date:"l F jS, Y" }}</strong></p>
 								<p>{{ log.notes }}</p>

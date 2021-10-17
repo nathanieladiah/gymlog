@@ -150,7 +150,6 @@ function add_set() {
 
 
 function save_log(date, time, notes, sets) {
-	// TODO: Create function to store info from exercise page in database
 	const csrftoken = getCookie('csrftoken');
 
 	const form = document.querySelector('#addlog-form');

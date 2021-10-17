@@ -98,19 +98,7 @@
 							<!-- Add exercise form -->
 							<form id="Preexercise_form" method="POST" action="{% url 'pre_exercise' %}">
 								{% csrf_token %}
-								<!-- <div class="form-floating mb-3">
-									<input class="form-control" id="exercise_name" type="text" name="name" autocomplete="off" placeholder="Name">
-									<label for="exercise_name">Name</label>
-								</div>
-								<div class="form-floating mb-3">
-									<select class="form-select" id="prefloatingSelect" name="method" aria-label="Floating label select example">
-										{% for method in methods %}
-											<option value="{{ method.0 }}">{{ method.1 }}</option>
-										{% endfor %}
-									</select>
-									<label for="prefloatingSelect">Exercise type:</label>
-								</div> -->
-								<div class="row">
+									<div class="row">
 									{% for exercise in pre_exercises %}
 										<button class="btn btn-outline-secondary mb-3" type="submit" name="exercise" value="{{ exercise.id }}">{{ exercise.name }}</button>
 									{% endfor %}
