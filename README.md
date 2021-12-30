@@ -435,3 +435,5 @@ TODO: display a different new exercise page if cardio or strength
 TODO: add instructions/ description/ pictures to exercises
 TODO: when you add a routine, add all the exercises to user profile
 TODO: in the graphing section, need to convert units to kg
+
+Moved over from cs50 repo to pro repo.
